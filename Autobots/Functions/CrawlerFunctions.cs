@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Crawler;
+using Crawler.GoldPriceCollector;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -17,7 +18,7 @@ public class CrawlerFunctions
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "crawlers")] HttpRequest req,
         ILogger log)
     {
-        var results = await CrawlerService.Run();
+        var results = await GoldCollector.Collect();
         return new OkObjectResult(results.Take(100));
     }
 }
