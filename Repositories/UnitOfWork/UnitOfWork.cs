@@ -17,6 +17,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         var logger = loggerFactory.CreateLogger<UnitOfWork>();
         
         Cars = new CarRepository(dbContext, logger);
+        ElectricPrices = new ElectricPriceRepository(dbContext, logger);
     }
 
     public async Task CompleteAsync()

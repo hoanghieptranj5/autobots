@@ -7,7 +7,7 @@ namespace Repositories.UnitOfWork;
 
 public class ElectricPriceRepository : Repository<ElectricPrice>, IElectricPriceRepository
 {
-    protected ElectricPriceRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
+    public ElectricPriceRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
     {
     }
 }

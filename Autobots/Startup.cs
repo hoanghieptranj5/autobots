@@ -3,6 +3,8 @@ using System.Reflection;
 using Autobots;
 using AzureFunctions.Extensions.Swashbuckle;
 using AzureFunctions.Extensions.Swashbuckle.Settings;
+using ElectricCalculator.Logics;
+using ElectricCalculator.Profiles;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -44,5 +46,10 @@ public class Startup : FunctionsStartup
             SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionString));
 
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        builder.Services.AddAutoMapper(typeof(ElectricPriceProfile));
+        builder.Services.AddScoped<IElectricPriceRepository, ElectricPriceRepository>();
+        builder.Services.AddScoped<IElectricPriceService, ElectricPriceService>();
+        builder.Services.AddScoped<ICalculationLogic, CalculationLogic>();
     }
 }
