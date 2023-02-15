@@ -9,6 +9,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     private readonly ApplicationDbContext _dbContext;
 
     public ICarRepository Cars { get; set; }
+    public IElectricPriceRepository ElectricPrices { get; set; }
 
     public UnitOfWork(ApplicationDbContext dbContext, ILoggerFactory loggerFactory)
     {

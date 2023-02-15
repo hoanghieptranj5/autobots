@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Repositories.Models.ElectricCalculator;
 
 namespace Repositories.Models;
 
@@ -18,6 +19,7 @@ public partial class ApplicationDbContext : DbContext
     }
 
     public virtual DbSet<Car> Cars { get; set; }
+    public virtual DbSet<ElectricPrice> ElectricPrices { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
