@@ -41,15 +41,38 @@ public class ElectricCalculatorFunctions
     [ApiExplorerSettings(GroupName = "ElectricCalculator")]
     [FunctionName("SaveElectricPrice")]
     public async Task<IActionResult> SaveElectricPrice(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "electricPrices/{priceId}")]
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "electricPrices")]
         [RequestBodyType(typeof(CreateElectricPriceRequestModel), "Create Type")]
         HttpRequest req,
-        string priceId,
         ILogger log)
     {
         var requestObject = await new StreamReader(req.Body).ReadToEndAsync();
         var requestModel = JsonConvert.DeserializeObject<CreateElectricPriceRequestModel>(requestObject);
         var results = await _electricPriceService.InsertSingle(_mapper.Map<ElectricPrice>(requestModel));
         return new OkObjectResult(results);
+    }
+    
+    [ApiExplorerSettings(GroupName = "ElectricCalculator")]
+    [FunctionName("DeleteElectricPrice")]
+    public async Task<IActionResult> DeleteElectricPrice(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "electricPrices/{priceId}")]
+        HttpRequest req,
+        int priceId,
+        ILogger log)
+    {
+        var results = await _electricPriceService.RemoveSingle(priceId);
+        return new OkObjectResult(results);
+    }
+    
+    [ApiExplorerSettings(GroupName = "ElectricCalculator")]
+    [FunctionName("CalculateUsage")]
+    public async Task<IActionResult> CalculateUsage(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "electricPrices/usage/{value}")]
+        HttpRequest req,
+        int value,
+        ILogger log)
+    {
+        var result = await _calculationLogic.CalculateAsync(value);
+        return new OkObjectResult(result);
     }
 }
