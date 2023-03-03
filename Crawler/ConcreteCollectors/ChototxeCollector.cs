@@ -20,14 +20,16 @@ public class ChototxeCollector : ICollector<Car>
         var count = 0;
         foreach (var row in rows)
         {
-            var infoNodes = row.SelectNodes("//a//div");
+            var name = row.SelectSingleNode(".//*[@class='commonStyle_adTitle__g520j ']");
+            var price = row.SelectSingleNode(".//*[@class='AdBody_adItemPrice__Xr5sP']");
+            
             var car = new Car
             {
                 CollectedDate = DateTime.Now,
                 CollectedFrom = Url,
-                Description = infoNodes[0].InnerText,
+                Description = price.InnerText,
                 Id = count,
-                Name = infoNodes[2].InnerText
+                Name = name.InnerText
             };
             result.Add(car);
             
