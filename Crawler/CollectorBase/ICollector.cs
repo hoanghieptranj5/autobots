@@ -2,8 +2,8 @@ using HtmlAgilityPack;
 
 namespace Crawler.CollectorBase;
 
-public interface ICollector
+public interface ICollector<T> where T : class
 {
     string Url { get; }
-    object DoCollectBusiness(HtmlDocument document);
+    IEnumerable<T> DoCollectBusiness(HtmlDocument document);
 }
