@@ -56,5 +56,7 @@ public class Startup : FunctionsStartup
 
         builder.Services.AddScoped<ITextDocumentReader, TextDocumentReader>();
         builder.Services.AddScoped<IHanziDbService, HanziDbService>();
+        builder.Services.AddScoped<IHanziService, HanziService>();
+        builder.Services.AddScoped<ICrawlerService, CrawlerService>();
     }
 }
