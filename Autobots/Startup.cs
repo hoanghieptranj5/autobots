@@ -5,6 +5,8 @@ using AzureFunctions.Extensions.Swashbuckle;
 using AzureFunctions.Extensions.Swashbuckle.Settings;
 using ElectricCalculator.Logics;
 using ElectricCalculator.Profiles;
+using HanziCollector.Abstraction;
+using HanziCollector.Implementations;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -51,5 +53,7 @@ public class Startup : FunctionsStartup
         builder.Services.AddScoped<IElectricPriceRepository, ElectricPriceRepository>();
         builder.Services.AddScoped<IElectricPriceService, ElectricPriceService>();
         builder.Services.AddScoped<ICalculationLogic, CalculationLogic>();
+
+        builder.Services.AddScoped<ITextDocumentReader, TextDocumentReader>();
     }
 }
