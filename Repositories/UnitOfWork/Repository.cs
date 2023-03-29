@@ -6,7 +6,7 @@ using Repositories.UnitOfWork.Abstractions;
 
 namespace Repositories.UnitOfWork;
 
-public class Repository<T> : IRepository<T> where T : class
+public class Repository<T, R> : IRepository<T, R> where T : class
 {
     private readonly DbSet<T> _dbSet;
     private readonly ILogger _logger;
@@ -22,7 +22,7 @@ public class Repository<T> : IRepository<T> where T : class
         return await _dbSet.ToListAsync();
     }
 
-    public async Task<T?> GetById(int id)
+    public async Task<T?> GetById(R id)
     {
         return await _dbSet.FindAsync(id);
     }
@@ -42,7 +42,7 @@ public class Repository<T> : IRepository<T> where T : class
         return true;
     }
 
-    public async Task<bool> Delete(int id)
+    public async Task<bool> Delete(R id)
     {
         var entity = await GetById(id);
         if (entity == null)

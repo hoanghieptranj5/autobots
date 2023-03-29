@@ -2,7 +2,7 @@
 
 namespace Repositories.UnitOfWork.Abstractions;
 
-public interface IHanziRepository : IRepository<Hanzi>
+public interface IHanziRepository : IRepository<Hanzi, string>
 {
     
 }

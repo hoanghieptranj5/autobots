@@ -55,5 +55,6 @@ public class Startup : FunctionsStartup
         builder.Services.AddScoped<ICalculationLogic, CalculationLogic>();
 
         builder.Services.AddScoped<ITextDocumentReader, TextDocumentReader>();
+        builder.Services.AddScoped<IHanziDbService, HanziDbService>();
     }
 }

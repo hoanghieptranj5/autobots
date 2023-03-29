@@ -5,9 +5,9 @@ using Repositories.UnitOfWork.Abstractions;
 
 namespace Repositories.UnitOfWork;
 
-public class HanziRepository : Repository<Hanzi>, IHanziRepository
+public class HanziRepository : Repository<Hanzi, string>, IHanziRepository
 {
-    protected HanziRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
+    public HanziRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
     {
     }
 }

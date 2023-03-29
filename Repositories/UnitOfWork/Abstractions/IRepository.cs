@@ -2,12 +2,12 @@
 
 namespace Repositories.UnitOfWork.Abstractions;
 
-public interface IRepository<T> where T : class
+public interface IRepository<T, R> where T : class
 {
     Task<IEnumerable<T>> All();
-    Task<T?> GetById(int id);
+    Task<T?> GetById(R id);
     Task<bool> Add(T entity);
-    Task<bool> Delete(int id);
+    Task<bool> Delete(R id);
     Task<bool> Upsert(T entity);
     Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate);
 }

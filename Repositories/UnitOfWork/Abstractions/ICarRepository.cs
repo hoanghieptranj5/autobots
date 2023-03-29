@@ -2,7 +2,7 @@
 
 namespace Repositories.UnitOfWork.Abstractions;
 
-public interface ICarRepository : IRepository<Car>
+public interface ICarRepository : IRepository<Car, int>
 {
     
 }
