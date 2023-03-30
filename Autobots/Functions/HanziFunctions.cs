@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HanziCollector.Abstraction;
-using HanziCollector.Implementations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -26,7 +24,7 @@ public class HanziFunctions
         string filePath,
         ILogger log)
     {
-        _hanziService.ImportFromTextDocumentFile(filePath);
+        await _hanziService.ImportFromTextDocumentFile(filePath);
         return new OkObjectResult("200 OK");
     }
 }

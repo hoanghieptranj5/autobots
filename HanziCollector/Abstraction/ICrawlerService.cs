@@ -1,6 +1,6 @@
 ﻿namespace HanziCollector.Abstraction;
 
-public interface ICrawlerService
+internal interface ICrawlerService
 {
     Task<IEnumerable<string>> Crawl(string website);
 }

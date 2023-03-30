@@ -2,7 +2,7 @@
 
 namespace HanziCollector.Implementations;
 
-public class HanziService : IHanziService
+internal class HanziService : IHanziService
 {
     private readonly ITextDocumentReader _textDocumentReader;
     private readonly ICrawlerService _crawler;

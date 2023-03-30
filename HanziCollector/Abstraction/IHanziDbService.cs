@@ -2,7 +2,7 @@
 
 namespace HanziCollector.Abstraction;
 
-public interface IHanziDbService
+internal interface IHanziDbService
 { 
     Task<bool> SaveSingle(Hanzi hanzi);
     Task<IEnumerable<Hanzi>> ReadAll();
