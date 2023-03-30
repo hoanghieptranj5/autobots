@@ -1,4 +1,5 @@
 ﻿using HanziCollector.Abstraction;
+using HanziCollector.Models;
 
 namespace HanziCollector.Implementations;
 
@@ -32,5 +33,11 @@ internal class HanziService : IHanziService
             Console.WriteLine($"Unknown Exception: {e.Message}");
             throw;
         }
+    }
+
+    public async Task<HanziFromHvDic> GetHanziInformationFromHvDic(string hanzi)
+    {
+        var result = await _crawler.CrawlSingle(hanzi);
+        return result;
     }
 }
