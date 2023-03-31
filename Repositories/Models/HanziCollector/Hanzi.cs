@@ -10,4 +10,5 @@ public class Hanzi
     public string? Pinyin { get; set; }
     public string? Cantonese { get; set; }
     public int? Stroke { get; set; }
+    public string? MeaningInVietnamese { get; set; }
 }
