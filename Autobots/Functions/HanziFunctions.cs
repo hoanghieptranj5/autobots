@@ -59,4 +59,23 @@ public class HanziFunctions
         
         return new OkObjectResult(result);
     }
+    
+    [FunctionName("GetHanziListFromDb")]
+    public async Task<IActionResult> GetHanziListFromDb(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "hanzi/db")] HttpRequest req,
+        ILogger log)
+    {
+        var result = await _hanziService.GetAllInDb();
+        return new OkObjectResult(result);
+    }
+    
+    [FunctionName("RemoveSingleHanziFromDb")]
+    public async Task<IActionResult> RemoveSingleHanziFromDb(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "hanzi/db/{id}")] HttpRequest req,
+        string id,
+        ILogger log)
+    {
+        var result = await _hanziService.Delete(id);
+        return new OkObjectResult(result);
+    }
 }

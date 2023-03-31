@@ -1,5 +1,6 @@
 using HanziCollector.Abstraction;
 using HanziCollector.Implementations;
+using HanziCollector.Profiles;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HanziCollector.DI;
@@ -19,6 +20,7 @@ public static class SetupServicesExtension
         #region Public Interfaces
 
         services.AddScoped<IHanziService, HanziService>();
+        services.AddAutoMapper(typeof(HanziProfile));
 
         #endregion
     }
