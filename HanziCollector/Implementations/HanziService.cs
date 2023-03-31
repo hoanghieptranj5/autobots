@@ -14,14 +14,16 @@ internal class HanziService : IHanziService
         _crawler = crawlerService;
     }
 
-    public async Task ImportFromTextDocumentFile(string filePath)
+    public async Task<IEnumerable<HanziFromHvDic>> ImportFromTextDocumentFile(string filePath, int takeFrom = 0, int takeTo = 100)
     {
+        List<HanziFromHvDic> result;
         try
         {
             var characters = _textDocumentReader.ReadToCharArray(filePath);
-            var firstChar = characters.First();
-            var hanViet = await _crawler.Crawl($"https://hvdic.thivien.net/whv/{firstChar}");
-            Console.WriteLine(hanViet);
+            var chunk = characters.Skip(takeFrom).Take(takeTo).ToList();
+            result = chunk.Select(async c => await _crawler.CrawlSingle(c))
+                .Select(t => t.Result)
+                .ToList();
         }
         catch (IOException e)
         {
@@ -33,6 +35,8 @@ internal class HanziService : IHanziService
             Console.WriteLine($"Unknown Exception: {e.Message}");
             throw;
         }
+
+        return result;
     }
 
     public async Task<HanziFromHvDic> GetHanziInformationFromHvDic(string hanzi)

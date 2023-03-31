@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using AzureFunctions.Extensions.Swashbuckle.Attribute;
 using HanziCollector.Abstraction;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Autobots.Functions;
 
-[ApiExplorerSettings(GroupName = "汉字")]
+[ApiExplorerSettings(GroupName = "Hanzi")]
 public class HanziFunctions
 {
     private readonly IHanziService _hanziService;
@@ -21,13 +21,17 @@ public class HanziFunctions
     }
 
     [FunctionName("ImportByTxtFile")]
+    [QueryStringParameter("takeFrom", "Number of chars needs translating", DataType = typeof(int), Required = false)]
+    [QueryStringParameter("takeTo", "Number of chars needs translating", DataType = typeof(int), Required = false)]
     public async Task<IActionResult> ImportByTxtFile(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "hanzi/{filePath}")] HttpRequest req,
         string filePath,
         ILogger log)
     {
-        await _hanziService.ImportFromTextDocumentFile(filePath);
-        return new OkObjectResult("200 OK");
+        var takeFrom = int.Parse(req.Query["takeFrom"]);
+        var takeTo = int.Parse(req.Query["takeTo"]);
+        var result = await _hanziService.ImportFromTextDocumentFile(filePath, takeFrom, takeTo);
+        return new OkObjectResult(result);
     }
     
     [FunctionName("GetInformationOfHanzi")]
@@ -42,7 +46,7 @@ public class HanziFunctions
     
     [FunctionName("GetInformationOfMultipleHanzis")]
     public async Task<IActionResult> GetInformationOfMultipleHanzis(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "hanzi/多/{listId}/hvdic")] HttpRequest req,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "hanzi/multi/{listId}/hvdic")] HttpRequest req,
         string listId,
         ILogger log)
     {

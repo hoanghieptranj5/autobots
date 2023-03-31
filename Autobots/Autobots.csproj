@@ -26,4 +26,8 @@
       <ProjectReference Include="..\HanziCollector\HanziCollector.csproj" />
       <ProjectReference Include="..\Repositories\Repositories.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Extensions" />
+      <Folder Include="Helpers" />
+    </ItemGroup>
 </Project>
