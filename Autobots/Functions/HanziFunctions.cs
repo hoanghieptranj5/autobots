@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AzureFunctions.Extensions.Swashbuckle.Attribute;
 using HanziCollector.Abstraction;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using Repositories.Models.HanziCollector;
 
 namespace Autobots.Functions;
 
@@ -61,11 +63,26 @@ public class HanziFunctions
     }
     
     [FunctionName("GetHanziListFromDb")]
+    [QueryStringParameter("skip", "skip number of chars", DataType = typeof(int), Required = false)]
+    [QueryStringParameter("take", "take number of chars", DataType = typeof(int), Required = false)]
     public async Task<IActionResult> GetHanziListFromDb(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "hanzi/db")] HttpRequest req,
         ILogger log)
     {
-        var result = await _hanziService.GetAllInDb();
+        List<Hanzi> result;
+        var skip = int.Parse(req.Query["skip"]);
+        var take = int.Parse(req.Query["take"]);
+        if (skip == 0 || take == 0)
+        {
+            var allInDb = await _hanziService.GetAllInDb();
+            result = allInDb.Any() ? allInDb.ToList() : null;
+        }
+        else
+        {
+            var allInDb2 = await _hanziService.GetAllInDb(skip, take);
+            result = allInDb2.Any() ? allInDb2.ToList() : null;
+        }
+
         return new OkObjectResult(result);
     }
     

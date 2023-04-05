@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HanziCollector.Abstraction;
 using HanziCollector.Models;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Models.HanziCollector;
 using Repositories.UnitOfWork.Abstractions;
 
@@ -11,13 +12,15 @@ internal class HanziService : IHanziService
     private readonly ITextDocumentReader _textDocumentReader;
     private readonly ICrawlerService _crawler;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IHanziDbService _hanziDbService;
     private readonly IMapper _mapper;
 
-    public HanziService(ITextDocumentReader textDocumentReader, ICrawlerService crawlerService, IUnitOfWork unitOfWork, IMapper mapper)
+    public HanziService(ITextDocumentReader textDocumentReader, ICrawlerService crawlerService, IUnitOfWork unitOfWork, IHanziDbService hanziDbService, IMapper mapper)
     {
         _textDocumentReader = textDocumentReader;
         _crawler = crawlerService;
         _unitOfWork = unitOfWork;
+        _hanziDbService = hanziDbService;
         _mapper = mapper;
     }
 
@@ -73,7 +76,12 @@ internal class HanziService : IHanziService
 
     public async Task<IEnumerable<Hanzi>> GetAllInDb()
     {
-        return await _unitOfWork.Hanzis.All();
+        return await _hanziDbService.ReadAll();
+    }
+
+    public async Task<IEnumerable<Hanzi>> GetAllInDb(int skip, int take)
+    {
+        return await _hanziDbService.ReadRange(skip, take);
     }
 
     public async Task<bool> Delete(string id)

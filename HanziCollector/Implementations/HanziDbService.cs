@@ -1,4 +1,5 @@
 ﻿using HanziCollector.Abstraction;
+using Microsoft.EntityFrameworkCore;
 using Repositories.Models.HanziCollector;
 using Repositories.UnitOfWork.Abstractions;
 
@@ -20,10 +21,29 @@ public class HanziDbService : IHanziDbService
         return completed;
     }
 
+    /// <summary>
+    /// Not recommended for use.
+    /// </summary>
+    /// <returns></returns>
     public async Task<IEnumerable<Hanzi>> ReadAll()
     {
         var hanzis = await _unitOfWork.Hanzis.All();
         return hanzis;
+    }
+
+    public async Task<IEnumerable<Hanzi>> ReadRange(int skip, int take)
+    {
+        var result = await _unitOfWork.Hanzis
+            .AllQuery()
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+        return result;
+    }
+
+    public Task<IEnumerable<Hanzi>> ReadRandomHanziList()
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<bool> DeleteSingle(string id)

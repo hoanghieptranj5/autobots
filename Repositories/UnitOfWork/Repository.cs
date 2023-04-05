@@ -22,6 +22,11 @@ public class Repository<T, R> : IRepository<T, R> where T : class
         return await _dbSet.ToListAsync();
     }
 
+    public IQueryable<T> AllQuery()
+    {
+        return _dbSet.AsQueryable();
+    }
+
     public async Task<T?> GetById(R id)
     {
         return await _dbSet.FindAsync(id);
