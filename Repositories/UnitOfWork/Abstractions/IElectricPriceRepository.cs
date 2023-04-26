@@ -4,5 +4,4 @@ namespace Repositories.UnitOfWork.Abstractions;
 
 public interface IElectricPriceRepository : IRepository<ElectricPrice, int>
 {
-    
 }

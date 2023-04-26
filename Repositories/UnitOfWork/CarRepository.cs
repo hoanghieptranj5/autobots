@@ -6,8 +6,7 @@ namespace Repositories.UnitOfWork;
 
 public class CarRepository : Repository<Car, int>, ICarRepository
 {
-    public CarRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
-    {
-        
-    }
+  public CarRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
+  {
+  }
 }

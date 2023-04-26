@@ -12,14 +12,15 @@ namespace Autobots.Functions;
 
 public class CrawlerFunctions
 {
-    [ApiExplorerSettings(GroupName = "Crawler")]
-    [FunctionName("TriggerCollection")]
-    public async Task<IActionResult> TriggerCollection(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "crawlers")] HttpRequest req,
-        ILogger log)
-    {
-        var collector = new GenericCollector<string>(new GoldPriceCollector());
-        var results = await collector.Collect();
-        return new OkObjectResult(results);
-    }
+  [ApiExplorerSettings(GroupName = "Crawler")]
+  [FunctionName("TriggerCollection")]
+  public async Task<IActionResult> TriggerCollection(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "crawlers")]
+    HttpRequest req,
+    ILogger log)
+  {
+    var collector = new GenericCollector<string>(new GoldPriceCollector());
+    var results = await collector.Collect();
+    return new OkObjectResult(results);
+  }
 }
