@@ -34,7 +34,10 @@ internal class HanziService : IHanziService
                 .Skip(takeFrom)
                 .Take(takeTo)
                 .ToList();
-            result = chunk.Select(async c => await _crawler.CrawlSingle(c))
+            
+            var cleanedChunk = await RemoveDuplicatedHanzis(chunk);
+            
+            result = cleanedChunk.Select(async c => await _crawler.CrawlSingle(c))
                 .Select(t => t.Result)
                 .ToList();
             
@@ -100,4 +103,22 @@ internal class HanziService : IHanziService
         await _unitOfWork.CompleteAsync();
         return deleted;
     }
+
+    #region Private Methods
+
+    private async Task<IEnumerable<string>> RemoveDuplicatedHanzis(IEnumerable<string> ids)
+    {
+        var existingHanzis = await _hanziDbService.ReadAll();
+        var duplicatedOnes = existingHanzis
+            .Where(x => ids.Contains(x.Id)).ToList();
+        foreach (var duplicatedOne in duplicatedOnes)
+        {
+            await _unitOfWork.Hanzis.Delete(duplicatedOne.Id);
+        }
+
+        await _unitOfWork.CompleteAsync();
+        return ids;
+    }
+
+    #endregion
 }
