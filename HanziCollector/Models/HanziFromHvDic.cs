@@ -7,4 +7,5 @@ public class HanziFromHvDic
     public string HanViet { get; set; }
     public string Cantonese { get; set; }
     public string MeaningInVietnamese { get; set; }
+    public bool Processed { get; set; }
 }

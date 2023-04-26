@@ -30,7 +30,10 @@ internal class HanziService : IHanziService
         try
         {
             var characters = _textDocumentReader.ReadToCharArray(filePath);
-            var chunk = characters.Skip(takeFrom).Take(takeTo).ToList();
+            var chunk = characters
+                .Skip(takeFrom)
+                .Take(takeTo)
+                .ToList();
             result = chunk.Select(async c => await _crawler.CrawlSingle(c))
                 .Select(t => t.Result)
                 .ToList();
@@ -42,8 +45,15 @@ internal class HanziService : IHanziService
 
             foreach (var fromHvDic in result)
             {
+                if (string.IsNullOrEmpty(fromHvDic.Pinyin) || string.IsNullOrEmpty(fromHvDic.HanViet))
+                {
+                    fromHvDic.Processed = false; 
+                    continue;
+                }
+                
                 var hanzi = _mapper.Map<Hanzi>(fromHvDic);
                 await _unitOfWork.Hanzis.Add(hanzi);
+                fromHvDic.Processed = true; 
             }
 
             await _unitOfWork.CompleteAsync();

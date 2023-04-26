@@ -35,8 +35,9 @@ public class HanziDbService : IHanziDbService
     {
         var result = await _unitOfWork.Hanzis
             .AllQuery()
-            .Skip(skip)
+            .OrderBy(x => x.Id)
             .Take(take)
+            .Skip(skip)
             .ToListAsync();
         return result;
     }
