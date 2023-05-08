@@ -100,4 +100,19 @@ public class HanziFunctions
     var result = await _hanziService.Delete(id);
     return new OkObjectResult(result);
   }
+
+  [FunctionName("GetMissingHanzis")]
+  [QueryStringParameter("skip", "Number of chars needs translating", DataType = typeof(int), Required = false)]
+  [QueryStringParameter("take", "Number of chars needs translating", DataType = typeof(int), Required = false)]
+  public async Task<IActionResult> GetMissingHanzis(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "hanzi/missing/{filePath}")]
+    HttpRequest req,
+    string filePath,
+    ILogger log)
+  {
+    var skip = int.Parse(req.Query["skip"]);
+    var take = int.Parse(req.Query["take"]);
+    var result = await _hanziService.FindMissingIds(filePath, skip, take);
+    return new OkObjectResult(result);
+  }
 }

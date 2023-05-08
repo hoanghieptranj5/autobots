@@ -1,4 +1,5 @@
-﻿using HanziCollector.Models;
+﻿using System.Collections;
+using HanziCollector.Models;
 using Repositories.Models.HanziCollector;
 
 namespace HanziCollector.Abstraction;
@@ -11,4 +12,5 @@ public interface IHanziService
   Task<IEnumerable<Hanzi>> GetAllInDb();
   Task<IEnumerable<Hanzi>> GetAllInDb(int skip, int take);
   Task<bool> Delete(string id);
+  Task<IEnumerable<string>> FindMissingIds(string filePath, int skip, int take);
 }

@@ -106,18 +106,24 @@ internal class HanziService : IHanziService
     return deleted;
   }
 
+  public async Task<IEnumerable<string>> FindMissingIds(string filePath, int skip, int take)
+  {
+    var characters = _textDocumentReader.ReadToCharArray(filePath);
+    characters = characters.Distinct().Skip(skip).Take(take);
+    
+    var matchedItems = await _unitOfWork.Hanzis.AllQuery()
+      .Where(x => characters.Contains(x.Id))
+      .Select(x => x.Id)
+      .ToListAsync();
+
+    return characters.Except(matchedItems);
+  }
+
   #region Private Methods
 
   private async Task<IEnumerable<string>> RemoveDuplicatedHanzis(IEnumerable<string> ids)
   {
     var whereIn = ids.ToArray();
-    // var existingHanzis = await _hanziDbService.ReadAll();
-    // var duplicatedOnes = existingHanzis
-    //     .Where(x => ids.Contains(x.Id)).ToList();
-    // foreach (var duplicatedOne in duplicatedOnes)
-    // {
-    //     await _unitOfWork.Hanzis.Delete(duplicatedOne.Id);
-    // }
     var duplicatedOnes = await _unitOfWork.Hanzis.AllQuery()
       .Where(x => whereIn.Contains(x.Id))
       .ToListAsync();
