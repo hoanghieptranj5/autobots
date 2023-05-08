@@ -21,7 +21,6 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Crawler\Crawler.csproj" />
       <ProjectReference Include="..\ElectricCalculator\ElectricCalculator.csproj" />
       <ProjectReference Include="..\HanziCollector\HanziCollector.csproj" />
       <ProjectReference Include="..\Repositories\Repositories.csproj" />
