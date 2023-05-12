@@ -3,6 +3,7 @@ using System.Reflection;
 using Autobots;
 using AzureFunctions.Extensions.Swashbuckle;
 using AzureFunctions.Extensions.Swashbuckle.Settings;
+using ElectricCalculator.DI;
 using ElectricCalculator.Logics;
 using ElectricCalculator.Profiles;
 using HanziCollector.DI;
@@ -55,10 +56,8 @@ public class Startup : FunctionsStartup
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
     builder.Services.AddAutoMapper(typeof(ElectricPriceProfile));
-    builder.Services.AddScoped<IElectricPriceRepository, ElectricPriceRepository>();
-    builder.Services.AddScoped<IElectricPriceService, ElectricPriceService>();
-    builder.Services.AddScoped<ICalculationLogic, CalculationLogic>();
 
+    builder.Services.SetupElectricityPriceDependencies();
     builder.Services.SetupHanziDependencies();
   }
 }
