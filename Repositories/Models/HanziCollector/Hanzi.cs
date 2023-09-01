@@ -12,4 +12,5 @@ public class Hanzi
   public string? Cantonese { get; set; }
   public int? Stroke { get; set; }
   public string? MeaningInVietnamese { get; set; }
+  public int InsertedOrder { get; set; }
 }
