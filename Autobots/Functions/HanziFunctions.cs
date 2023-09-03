@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AzureFunctions.Extensions.Swashbuckle.Attribute;
@@ -113,6 +114,28 @@ public class HanziFunctions
     var skip = int.Parse(req.Query["skip"]);
     var take = int.Parse(req.Query["take"]);
     var result = await _hanziService.FindMissingIds(filePath, skip, take);
+    return new OkObjectResult(result);
+  }
+  
+  [FunctionName("GetRandomListOfHanzis")]
+  [QueryStringParameter("numberOfChars", "take number of chars", DataType = typeof(int), Required = true)]
+  public async Task<IActionResult> GetRandomHanzis(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "hanzi/random")]
+    HttpRequest req,
+    ILogger log)
+  {
+    List<Hanzi> result;
+    var numberOfChars = int.Parse(req.Query["numberOfChars"]);
+    
+    if (numberOfChars == 0)
+    {
+      return new OkObjectResult("Please input numberOfChars");
+    }
+    
+    var fromDb = await _hanziService.GetRandomList(numberOfChars);
+    var hanzis = fromDb.ToList();
+    result = hanzis.Any() ? hanzis.ToList() : null;
+    
     return new OkObjectResult(result);
   }
 }
