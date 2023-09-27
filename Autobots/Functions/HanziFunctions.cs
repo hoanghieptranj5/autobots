@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AzureFunctions.Extensions.Swashbuckle.Attribute;
 using HanziCollector.Abstraction;
@@ -8,7 +9,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Repositories.Models.HanziCollector;
 
 namespace Autobots.Functions;
@@ -50,12 +54,19 @@ public class HanziFunctions
   }
 
   [FunctionName("GetInformationOfMultipleHanzis")]
+  [OpenApiOperation(operationId: "apikey.query", tags: new[] { "apikey" }, Summary = "API Key authentication code flow via querystring", Description = "This shows the API Key authentication code flow via querystring", Visibility = OpenApiVisibilityType.Important)]
+  [OpenApiSecurity("apikeyquery_auth",
+    SecuritySchemeType.ApiKey,
+    In = OpenApiSecurityLocationType.Query,
+    Name = "token")]
+  [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Dictionary<string, string>), Summary = "successful operation", Description = "successful operation")]
   public async Task<IActionResult> GetInformationOfMultipleHanzis(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "hanzi/multi/{listId}/hvdic")]
     HttpRequest req,
     string listId,
     ILogger log)
   {
+    var queries = req.Query.ToDictionary(q => q.Key, q => (string)q.Value);
     var chars = listId.ToCharArray().Select(x => x.ToString());
 
     var result = chars.Select(async c => await _hanziService.GetHanziInformationFromHvDic(c))
