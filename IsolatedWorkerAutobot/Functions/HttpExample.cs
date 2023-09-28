@@ -8,6 +8,9 @@ using Microsoft.OpenApi.Models;
 
 namespace IsolatedWorkerAutobot.Functions
 {
+  /// <summary>
+  /// From V4 version, we move from HttpRequest to use HttpRequestData
+  /// </summary>
   public class HttpExample
   {
     private readonly ILogger _logger;

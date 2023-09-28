@@ -1,0 +1,13 @@
+using IAM.Models;
+
+namespace IAM.Data.Abstraction;
+
+public interface IUserService
+{
+  Task<UserExport?> CreateSingle(CreateUserRequest request);
+  Task<UserExport> UpdateSingle(CreateUserRequest request);
+  Task<IEnumerable<UserExport>> GetList();
+  Task<UserExport> DeleteSingle(DeleteUserRequest request);
+  Task<UserExport> DeleteSingleByUsername(string username);
+  Task<UserExport> DeleteSingleByEmail(string username);
+}
