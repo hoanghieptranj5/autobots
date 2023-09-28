@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories.Models.Users;
 
+[Index(nameof(Username))]
 public class User
 {
     [Key]
