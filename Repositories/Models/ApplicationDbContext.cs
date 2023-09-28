@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Repositories.Models.ElectricCalculator;
 using Repositories.Models.HanziCollector;
+using Repositories.Models.Users;
 
 namespace Repositories.Models;
 
@@ -22,6 +23,7 @@ public partial class ApplicationDbContext : DbContext
   public virtual DbSet<Car> Cars { get; set; }
   public virtual DbSet<ElectricPrice> ElectricPrices { get; set; }
   public virtual DbSet<Hanzi> Hanzis { get; set; }
+  public virtual DbSet<User> Users { get; set; }
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
