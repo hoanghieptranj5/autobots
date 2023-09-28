@@ -1,5 +1,6 @@
 using AutoMapper;
 using IAM.Data.Abstraction;
+using IAM.Helper;
 using IAM.Models;
 using Repositories.Models.Users;
 using Repositories.UnitOfWork.Abstractions;
@@ -59,6 +60,29 @@ public class UserService : IUserService
   }
 
   public Task<UserExport> DeleteSingleByEmail(string username)
+  {
+    throw new NotImplementedException();
+  }
+
+  public async Task<UserExport> Login(LoginRequest request)
+  {
+    var users = await _unitOfWork.Users.Find(u => u.Username.Equals(request.Username));
+    var userList = users.ToList();
+    if (!userList.Any())
+    {
+      throw new Exception("Username is not found.");
+    }
+
+    var user = userList.FirstOrDefault(u => PasswordHasher.Verify(request.Password, u.PasswordHash));
+    if (user == null)
+    {
+      throw new Exception("Invalid Password.");
+    }
+
+    return _mapper.Map<UserExport>(user);
+  }
+
+  public Task<UserExport> Logout(LogoutRequest request)
   {
     throw new NotImplementedException();
   }

@@ -10,4 +10,6 @@ public interface IUserService
   Task<UserExport> DeleteSingle(DeleteUserRequest request);
   Task<UserExport> DeleteSingleByUsername(string username);
   Task<UserExport> DeleteSingleByEmail(string username);
+  Task<UserExport> Login(LoginRequest request);
+  Task<UserExport> Logout(LogoutRequest request);
 }
