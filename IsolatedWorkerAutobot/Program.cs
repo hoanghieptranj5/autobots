@@ -1,4 +1,5 @@
 using IAM.DI;
+using IsolatedWorkerAutobot.Middlewares;
 using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +9,11 @@ using Repositories.UnitOfWork;
 using Repositories.UnitOfWork.Abstractions;
 
 var host = new HostBuilder()
-  .ConfigureFunctionsWorkerDefaults(worker => worker.UseNewtonsoftJson())
+  .ConfigureFunctionsWorkerDefaults(worker =>
+  {
+    worker.UseMiddleware<AuthorizationMiddleware>();
+    worker.UseNewtonsoftJson();
+  })
   .ConfigureOpenApi()
   .ConfigureServices(services =>
   {
@@ -19,6 +24,7 @@ var host = new HostBuilder()
 
     services.AddScoped<IUnitOfWork, UnitOfWork>();
     services.SetupIAMDependencies();
+    services.AddEndpointsApiExplorer();
   })
   .Build();
 
