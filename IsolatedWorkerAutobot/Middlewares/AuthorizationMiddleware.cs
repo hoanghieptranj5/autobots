@@ -25,8 +25,8 @@ public class AuthorizationMiddleware : IFunctionsWorkerMiddleware
   public async Task Invoke(FunctionContext context, FunctionExecutionDelegate next)
   {
     var targetMethod = TargetMethodHelper.GetTargetFunctionMethod(context);
-    var authAttrs = TargetMethodHelper.GetFunctionMethodAttribute<AuthorizedAttribute>(targetMethod);
-    var allowAllAttrs = TargetMethodHelper.GetFunctionMethodAttribute<AllowAllAttribute>(targetMethod);
+    var authAttrs = TargetMethodHelper.GetFunctionMethodAttribute<AuthorizeAttribute>(targetMethod);
+    var allowAllAttrs = TargetMethodHelper.GetFunctionMethodAttribute<AllowAnonymousAttribute>(targetMethod);
 
     if (authAttrs.Any())
     {
@@ -56,8 +56,19 @@ public class AuthorizationMiddleware : IFunctionsWorkerMiddleware
         return;
       }
       
-      var email = JwtHelper.GetClaim(token, "email");
-      _logger.LogTrace(email);
+      var expiration = JwtHelper.GetClaim(token, ClaimTypes.Expiration);
+      _logger.LogDebug(expiration);
+      DateTime.TryParse(expiration, out DateTime expirationDateTime);
+      _logger.LogDebug(expirationDateTime.ToShortDateString());
+      if (expirationDateTime < DateTime.Now)
+      {
+        var req = await context.GetHttpRequestDataAsync();
+        var res = req!.CreateResponse();
+        res.StatusCode = HttpStatusCode.Unauthorized;
+        await res.WriteAsJsonAsync("token expired.");
+        context.GetInvocationResult().Value = res;
+        return;
+      }
     }
     else if (allowAllAttrs.Any()) _logger.LogDebug($"This method {targetMethod.Name} allow all inbounds.");
 

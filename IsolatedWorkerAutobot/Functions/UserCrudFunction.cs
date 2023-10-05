@@ -13,18 +13,18 @@ using Newtonsoft.Json;
 
 namespace IsolatedWorkerAutobot.Functions;
 
-public class UserCrud
+public class UserCrudFunction
 {
   private readonly ILogger _logger;
   private readonly IUserService _userService;
 
-  public UserCrud(IUserService userService, ILoggerFactory loggerFactory)
+  public UserCrudFunction(IUserService userService, ILoggerFactory loggerFactory)
   {
     _userService = userService;
-    _logger = loggerFactory.CreateLogger<HttpExample>();
+    _logger = loggerFactory.CreateLogger<HttpExampleFunction>();
   }
 
-  [Authorized]
+  [Authorize]
   [OpenApiOperation("GetUserList", new[] { "User" }, Summary = "GetUserList",
     Description = "This gets a list of users.", Visibility = OpenApiVisibilityType.Important)]
   [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
@@ -48,10 +48,9 @@ public class UserCrud
     }
   }
 
-  [AllowAll]
+  [AllowAnonymous]
   [OpenApiOperation("Login", new[] { "User" }, Summary = "Login",
     Description = "Login via username and password", Visibility = OpenApiVisibilityType.Important)]
-  [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
   [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
     Summary = "The response", Description = "This returns the response")]
   [OpenApiRequestBody("application/json", typeof(LoginRequest))]
@@ -75,8 +74,7 @@ public class UserCrud
     }
   }
 
-  [Authorized]
-  // 👇👇👇👇👇 Add OpenAPI related decorators below 👇👇👇👇👇
+  [Authorize]
   [OpenApiOperation("AddSingleUser", new[] { "User" }, Summary = "AddSingleUser",
     Description = "This adds a new user to system.", Visibility = OpenApiVisibilityType.Important)]
   [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
@@ -84,7 +82,6 @@ public class UserCrud
     Example = typeof(CreateUserRequest))]
   [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
     Summary = "The response", Description = "This returns the response")]
-  // 👆👆👆👆👆 Add OpenAPI related decorators above 👆👆👆👆👆
   [Function("AddSingleUser")]
   public async Task<IActionResult> AddSingleUser(
     [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "user")]
@@ -98,7 +95,7 @@ public class UserCrud
     return new OkObjectResult(result);
   }
 
-  [Authorized]
+  [Authorize]
   [OpenApiOperation("DeleteSingleUser", new[] { "User" }, Summary = "DeleteSingleUser",
     Description = "This remove a user of system.", Visibility = OpenApiVisibilityType.Important)]
   [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]

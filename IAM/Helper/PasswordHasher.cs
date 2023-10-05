@@ -1,6 +1,6 @@
 namespace IAM.Helper;
 
-public class PasswordHasher
+public static class PasswordHasher
 {
   public static string Hash(string password)
   {

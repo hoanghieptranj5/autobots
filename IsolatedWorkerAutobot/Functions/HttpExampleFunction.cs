@@ -12,16 +12,16 @@ namespace IsolatedWorkerAutobot.Functions;
 /// <summary>
 ///   From V4 version, we move from HttpRequest to use HttpRequestData
 /// </summary>
-public class HttpExample
+public class HttpExampleFunction
 {
   private readonly ILogger _logger;
 
-  public HttpExample(ILoggerFactory loggerFactory)
+  public HttpExampleFunction(ILoggerFactory loggerFactory)
   {
-    _logger = loggerFactory.CreateLogger<HttpExample>();
+    _logger = loggerFactory.CreateLogger<HttpExampleFunction>();
   }
 
-  [AllowAll]
+  [AllowAnonymous]
   // 👇👇👇👇👇 Add OpenAPI related decorators below 👇👇👇👇👇
   [OpenApiOperation("greeting", new[] { "greeting" }, Summary = "Greetings",
     Description = "This shows a welcome message.", Visibility = OpenApiVisibilityType.Important)]

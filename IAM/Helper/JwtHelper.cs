@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,6 +15,9 @@ public static class JwtHelper
 
   public static string GenerateToken(int userId, string email)
   {
+    var expirationDateTime = DateTime.Now.AddMinutes(30);
+    var expirationTimeString = expirationDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+    
     var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Secret));
 
     var tokenHandler = new JwtSecurityTokenHandler();
@@ -22,7 +26,8 @@ public static class JwtHelper
       Subject = new ClaimsIdentity(new Claim[]
       {
         new(ClaimTypes.NameIdentifier, userId.ToString()),
-        new(ClaimTypes.Email, email)
+        new(ClaimTypes.Email, email),
+        new(ClaimTypes.Expiration, expirationTimeString)
       }),
       Expires = DateTime.UtcNow.AddDays(7),
       Issuer = Issuer,
