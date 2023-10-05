@@ -1,9 +1,9 @@
 using System.Reflection;
 using Microsoft.Azure.Functions.Worker;
 
-namespace IsolatedWorkerAutobot.Middlewares;
+namespace IsolatedWorkerAutobot.Middlewares.Helpers;
 
-internal static class MiddlewareHelper
+internal static class TargetMethodHelper
 {
   public static List<T> GetFunctionMethodAttribute<T>(MethodInfo targetMethod) where T : Attribute
   {

@@ -25,7 +25,6 @@ public class HttpExample
   // 👇👇👇👇👇 Add OpenAPI related decorators below 👇👇👇👇👇
   [OpenApiOperation("greeting", new[] { "greeting" }, Summary = "Greetings",
     Description = "This shows a welcome message.", Visibility = OpenApiVisibilityType.Important)]
-  [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
   [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
     Summary = "The response", Description = "This returns the response")]
   // 👆👆👆👆👆 Add OpenAPI related decorators above 👆👆👆👆👆

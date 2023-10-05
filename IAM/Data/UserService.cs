@@ -64,7 +64,7 @@ public class UserService : IUserService
     throw new NotImplementedException();
   }
 
-  public async Task<UserExport> Login(LoginRequest request)
+  public async Task<string> Login(LoginRequest request)
   {
     var users = await _unitOfWork.Users.Find(u => u.Username.Equals(request.Username));
     var userList = users.ToList();
@@ -78,8 +78,9 @@ public class UserService : IUserService
     {
       throw new Exception("Invalid Password.");
     }
+    var token = JwtHelper.GenerateToken(user.Id, user.Email);
 
-    return _mapper.Map<UserExport>(user);
+    return token;
   }
 
   public Task<UserExport> Logout(LogoutRequest request)
