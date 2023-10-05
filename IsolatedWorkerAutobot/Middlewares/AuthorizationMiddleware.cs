@@ -1,10 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc.Filters;
+using IsolatedWorkerAutobot.CustomAttributes;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Middleware;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
 namespace IsolatedWorkerAutobot.Middlewares;
@@ -20,11 +16,14 @@ public class AuthorizationMiddleware : IFunctionsWorkerMiddleware
 
   public async Task Invoke(FunctionContext context, FunctionExecutionDelegate next)
   {
-    var endpoint = context.Features.Get<IEndpointFeature>();
-    if (endpoint != null)
-    {
-      _logger.LogInformation($"{endpoint.Endpoint.DisplayName}");
-    }
+    var targetMethod = MiddlewareHelper.GetTargetFunctionMethod(context);
+    var authAttrs = MiddlewareHelper.GetFunctionMethodAttribute<AuthorizedAttribute>(targetMethod);
+    var allowAllAttrs = MiddlewareHelper.GetFunctionMethodAttribute<AllowAllAttribute>(targetMethod);
+
+    if (authAttrs.Any())
+      _logger.LogDebug($"This method {targetMethod.Name} requires authorization.");
+    else if (allowAllAttrs.Any()) _logger.LogDebug($"This method {targetMethod.Name} allow all inbounds.");
+
     await next(context);
   }
 }

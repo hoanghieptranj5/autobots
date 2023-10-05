@@ -20,7 +20,7 @@ var host = new HostBuilder()
     var connectionString =
       Environment.GetEnvironmentVariable("SqlConnectionString", EnvironmentVariableTarget.Process);
     services.AddDbContext<ApplicationDbContext>(options =>
-      SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionString));
+      options.UseSqlServer(connectionString));
 
     services.AddScoped<IUnitOfWork, UnitOfWork>();
     services.SetupIAMDependencies();
