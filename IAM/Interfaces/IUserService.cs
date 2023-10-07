@@ -1,6 +1,6 @@
-using IAM.Models;
+using IAM.ValuedObjects;
 
-namespace IAM.Data.Abstraction;
+namespace IAM.Interfaces;
 
 public interface IUserService
 {

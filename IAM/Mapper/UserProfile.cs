@@ -1,6 +1,6 @@
 using AutoMapper;
 using IAM.Helper;
-using IAM.Models;
+using IAM.ValuedObjects;
 using Repositories.Models.Users;
 
 namespace IAM.Mapper;

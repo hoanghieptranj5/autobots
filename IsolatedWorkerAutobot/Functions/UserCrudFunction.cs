@@ -1,6 +1,6 @@
 using System.Net;
-using IAM.Data.Abstraction;
-using IAM.Models;
+using IAM.Interfaces;
+using IAM.ValuedObjects;
 using IsolatedWorkerAutobot.CustomAttributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;

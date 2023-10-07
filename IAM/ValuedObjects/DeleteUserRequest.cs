@@ -1,4 +1,4 @@
-namespace IAM.Models;
+namespace IAM.ValuedObjects;
 
 public class DeleteUserRequest
 {

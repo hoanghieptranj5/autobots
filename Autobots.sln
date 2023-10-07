@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectricCalculator", "Elect
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HanziCollector", "HanziCollector\HanziCollector.csproj", "{B7E9390F-27C3-451C-9025-B92D19263021}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{A77B20BD-8946-4561-9853-337A6AFB0394}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A77B20BD-8946-4561-9853-337A6AFB0394}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{C95B3C09-D482-4CA3-AFB3-BC48B6D9D544}"
 EndProject

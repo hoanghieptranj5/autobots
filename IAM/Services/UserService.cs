@@ -1,11 +1,11 @@
 using AutoMapper;
-using IAM.Data.Abstraction;
 using IAM.Helper;
-using IAM.Models;
+using IAM.Interfaces;
+using IAM.ValuedObjects;
 using Repositories.Models.Users;
 using Repositories.UnitOfWork.Abstractions;
 
-namespace IAM.Data;
+namespace IAM.Services;
 
 public class UserService : IUserService
 {

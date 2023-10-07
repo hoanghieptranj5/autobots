@@ -1,6 +1,6 @@
-using IAM.Data;
-using IAM.Data.Abstraction;
+using IAM.Interfaces;
 using IAM.Mapper;
+using IAM.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Repositories.UnitOfWork;
 using Repositories.UnitOfWork.Abstractions;
