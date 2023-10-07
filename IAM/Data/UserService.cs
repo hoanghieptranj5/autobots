@@ -9,8 +9,8 @@ namespace IAM.Data;
 
 public class UserService : IUserService
 {
-  private readonly IUnitOfWork _unitOfWork;
   private readonly IMapper _mapper;
+  private readonly IUnitOfWork _unitOfWork;
 
   public UserService(IUnitOfWork unitOfWork, IMapper mapper)
   {
@@ -49,10 +49,7 @@ public class UserService : IUserService
   {
     var user = await _unitOfWork.Users.Find(u => u.Username.Equals(username));
     var enumerable = user.ToList();
-    if (user == null || !enumerable.Any())
-    {
-      throw new Exception("User not found");
-    }
+    if (user == null || !enumerable.Any()) throw new Exception("User not found");
 
     await _unitOfWork.Users.Delete(enumerable.FirstOrDefault()!.Id);
     await _unitOfWork.CompleteAsync();
@@ -68,16 +65,10 @@ public class UserService : IUserService
   {
     var users = await _unitOfWork.Users.Find(u => u.Username.Equals(request.Username));
     var userList = users.ToList();
-    if (!userList.Any())
-    {
-      throw new Exception("Username is not found.");
-    }
+    if (!userList.Any()) throw new Exception("Username is not found.");
 
     var user = userList.FirstOrDefault(u => PasswordHasher.Verify(request.Password, u.PasswordHash));
-    if (user == null)
-    {
-      throw new Exception("Invalid Password.");
-    }
+    if (user == null) throw new Exception("Invalid Password.");
     var token = JwtHelper.GenerateToken(user.Id, user.Email);
 
     return token;

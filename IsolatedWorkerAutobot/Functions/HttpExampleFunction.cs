@@ -5,7 +5,6 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 
 namespace IsolatedWorkerAutobot.Functions;
 
@@ -23,7 +22,7 @@ public class HttpExampleFunction
 
   [AllowAnonymous]
   // 👇👇👇👇👇 Add OpenAPI related decorators below 👇👇👇👇👇
-  [OpenApiOperation("greeting", new[] { "greeting" }, Summary = "Greetings",
+  [OpenApiOperation("greeting", "greeting", Summary = "Greetings",
     Description = "This shows a welcome message.", Visibility = OpenApiVisibilityType.Important)]
   [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
     Summary = "The response", Description = "This returns the response")]

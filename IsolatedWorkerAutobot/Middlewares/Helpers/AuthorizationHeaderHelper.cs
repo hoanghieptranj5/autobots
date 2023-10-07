@@ -1,5 +1,4 @@
 using Microsoft.Azure.Functions.Worker;
-using Newtonsoft.Json.Linq;
 
 namespace IsolatedWorkerAutobot.Middlewares.Helpers;
 

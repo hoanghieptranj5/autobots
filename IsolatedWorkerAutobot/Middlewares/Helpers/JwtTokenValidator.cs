@@ -7,28 +7,22 @@ namespace IsolatedWorkerAutobot.Middlewares.Helpers;
 internal static class JwtTokenValidator
 {
   #region Public Methods
-  
+
   /// <summary>
-  /// Three steps verifications
+  ///   Three steps verifications
   /// </summary>
   /// <param name="token"></param>
   /// <exception cref="TokenUnavailableException"></exception>
   /// <exception cref="TokenExpiredException"></exception>
   public static void Verify(string token)
   {
-    if (!IsTokenAvailable(token))
-    {
-      throw new TokenUnavailableException("Token is missing or invalid format.");
-    }
+    if (!IsTokenAvailable(token)) throw new TokenUnavailableException("Token is missing or invalid format.");
 
     var expiryTime = GetExpiryTime(token);
 
-    if (IsTokenExpired(expiryTime))
-    {
-      throw new TokenExpiredException("Token has expired.");
-    }
+    if (IsTokenExpired(expiryTime)) throw new TokenExpiredException("Token has expired.");
   }
-  
+
   #endregion
 
   #region Private Methods
@@ -57,6 +51,6 @@ internal static class JwtTokenValidator
     // Compare the expiry time with the current time.
     return DateTime.UtcNow >= expiryTime;
   }
-  
+
   #endregion
 }

@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -11,13 +10,13 @@ public static class JwtHelper
   private const string Secret = "ThisIsASuperMegaUltimateLongPasswordWithSpecialChar%^$@*";
   private const string Issuer = "http://mysite.com";
   private const string Audience = "http://myaudience.com";
-  private static SymmetricSecurityKey SecurityKey = new(Encoding.ASCII.GetBytes(Secret));
+  private static readonly SymmetricSecurityKey SecurityKey = new(Encoding.ASCII.GetBytes(Secret));
 
   public static string GenerateToken(int userId, string email)
   {
     var expirationDateTime = DateTime.Now.AddMinutes(30);
     var expirationTimeString = expirationDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-    
+
     var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Secret));
 
     var tokenHandler = new JwtSecurityTokenHandler();

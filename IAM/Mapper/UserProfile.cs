@@ -10,11 +10,11 @@ public class UserProfile : Profile
   public UserProfile()
   {
     CreateMap<UserExport, User>();
-    
+
     CreateMap<User, UserExport>();
 
     CreateMap<CreateUserRequest, User>()
-      .ForMember(dest => dest.PasswordHash, opts => 
+      .ForMember(dest => dest.PasswordHash, opts =>
         opts.MapFrom(src => PasswordHasher.Hash(src.Password)));
   }
 }

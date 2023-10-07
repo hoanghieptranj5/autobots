@@ -25,7 +25,7 @@ public class UserCrudFunction
   }
 
   [Authorize]
-  [OpenApiOperation("GetUserList", new[] { "User" }, Summary = "GetUserList",
+  [OpenApiOperation("GetUserList", "User", Summary = "GetUserList",
     Description = "This gets a list of users.", Visibility = OpenApiVisibilityType.Important)]
   [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
   [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
@@ -49,7 +49,7 @@ public class UserCrudFunction
   }
 
   [AllowAnonymous]
-  [OpenApiOperation("Login", new[] { "User" }, Summary = "Login",
+  [OpenApiOperation("Login", "User", Summary = "Login",
     Description = "Login via username and password", Visibility = OpenApiVisibilityType.Important)]
   [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
     Summary = "The response", Description = "This returns the response")]
@@ -75,7 +75,7 @@ public class UserCrudFunction
   }
 
   [Authorize]
-  [OpenApiOperation("AddSingleUser", new[] { "User" }, Summary = "AddSingleUser",
+  [OpenApiOperation("AddSingleUser", "User", Summary = "AddSingleUser",
     Description = "This adds a new user to system.", Visibility = OpenApiVisibilityType.Important)]
   [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
   [OpenApiRequestBody("application/json", typeof(CreateUserRequest), Description = "Parameters",
@@ -96,7 +96,7 @@ public class UserCrudFunction
   }
 
   [Authorize]
-  [OpenApiOperation("DeleteSingleUser", new[] { "User" }, Summary = "DeleteSingleUser",
+  [OpenApiOperation("DeleteSingleUser", "User", Summary = "DeleteSingleUser",
     Description = "This remove a user of system.", Visibility = OpenApiVisibilityType.Important)]
   [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
   [OpenApiParameter("username", Type = typeof(string))]

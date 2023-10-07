@@ -7,11 +7,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="AzureExtensions.Swashbuckle" Version="3.3.2" />
-        <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.19.0" />
-        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.0.13" />
-        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.OpenApi" Version="2.0.0-preview2" />
-        <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.14.0" />
+        <PackageReference Include="AzureExtensions.Swashbuckle" Version="3.3.2"/>
+        <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.19.0"/>
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.0.13"/>
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.OpenApi" Version="2.0.0-preview2"/>
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.14.0"/>
     </ItemGroup>
     <ItemGroup>
         <None Update="host.json">
@@ -22,14 +22,14 @@
             <CopyToPublishDirectory>Never</CopyToPublishDirectory>
         </None>
         <None Update="local.settings.json">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-          <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>Never</CopyToPublishDirectory>
         </None>
     </ItemGroup>
     <ItemGroup>
-        <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext" />
+        <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\IAM\IAM.csproj" />
+        <ProjectReference Include="..\IAM\IAM.csproj"/>
     </ItemGroup>
 </Project>

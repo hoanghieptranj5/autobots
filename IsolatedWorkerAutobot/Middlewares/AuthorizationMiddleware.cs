@@ -1,12 +1,8 @@
 using System.Net;
-using System.Security.Claims;
-using IAM.Data.Abstraction;
-using IAM.Helper;
 using IsolatedWorkerAutobot.CustomAttributes;
 using IsolatedWorkerAutobot.Exceptions;
 using IsolatedWorkerAutobot.Middlewares.Helpers;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker.Middleware;
 using Microsoft.Extensions.Logging;
 
@@ -30,7 +26,7 @@ public class AuthorizationMiddleware : IFunctionsWorkerMiddleware
     if (authAttrs.Any())
     {
       _logger.LogDebug($"This method {targetMethod.Name} requires authorization.");
-      
+
       const string key = "code";
       var requestData = await context.GetHttpRequestDataAsync();
       var token = requestData.Query.Get(key);
@@ -57,7 +53,9 @@ public class AuthorizationMiddleware : IFunctionsWorkerMiddleware
       }
     }
     else if (allowAllAttrs.Any())
+    {
       _logger.LogDebug($"This method {targetMethod.Name} allow all inbounds.");
+    }
 
     await next(context);
   }
