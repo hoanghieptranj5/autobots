@@ -10,9 +10,8 @@ public class MiddlewareResponseWriter
   {
     var req = await context.GetHttpRequestDataAsync();
     var res = req!.CreateResponse();
-    res.StatusCode = statusCode;
 
-    await res.WriteAsJsonAsync(message);
+    await res.WriteAsJsonAsync(message, statusCode);
 
     context.GetInvocationResult().Value = res;
   }
