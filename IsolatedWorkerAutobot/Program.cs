@@ -1,3 +1,4 @@
+using ElectricCalculator.Logics;
 using IAM.DI;
 using IsolatedWorkerAutobot.Middlewares;
 using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
@@ -23,6 +24,7 @@ var host = new HostBuilder()
       options.UseSqlServer(connectionString));
 
     services.AddScoped<IUnitOfWork, UnitOfWork>();
+    services.AddScoped<IElectricPriceService, ElectricPriceService>();
     services.SetupIAMDependencies();
     services.AddEndpointsApiExplorer();
   })

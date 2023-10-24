@@ -1,11 +1,3 @@
-using System.Net;
-using IsolatedWorkerAutobot.CustomAttributes;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
-using Microsoft.Extensions.Logging;
-
 namespace IsolatedWorkerAutobot.Functions;
 
 /// <summary>
