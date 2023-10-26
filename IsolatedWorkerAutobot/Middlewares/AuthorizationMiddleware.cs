@@ -1,3 +1,4 @@
+using IsolatedWorkerAutobot.Constants;
 using IsolatedWorkerAutobot.Exceptions;
 using IsolatedWorkerAutobot.Middlewares.Helpers;
 using Microsoft.Azure.Functions.Worker.Middleware;
@@ -23,9 +24,8 @@ public class AuthorizationMiddleware : IFunctionsWorkerMiddleware
         {
             _logger.LogDebug($"This method {targetMethod.Name} requires authorization.");
 
-            const string key = "code";
             var requestData = await context.GetHttpRequestDataAsync();
-            var bearerString = requestData.Query.Get(key);
+            var bearerString = requestData.Query.Get(AuthCode.Token);
 
             if (bearerString == null || !bearerString.StartsWith("Bearer "))
             {

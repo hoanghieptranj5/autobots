@@ -1,3 +1,5 @@
+using IsolatedWorkerAutobot.Constants;
+
 namespace IsolatedWorkerAutobot.Functions;
 
 public class ElectricCalculatorFunctions
@@ -12,7 +14,7 @@ public class ElectricCalculatorFunctions
     [Authorize]
     [OpenApiOperation("GetElectricPrices", "ElectricPrice", Summary = "GetElectricPrices",
         Description = "This gets a list of electricPrice.", Visibility = OpenApiVisibilityType.Important)]
-    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
+    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Query)]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
         Summary = "The response", Description = "This returns the response")]
     [Function("GetElectricPrices")]
