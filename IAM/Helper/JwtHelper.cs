@@ -7,66 +7,66 @@ namespace IAM.Helper;
 
 public static class JwtHelper
 {
-  private const string Secret = "ThisIsASuperMegaUltimateLongPasswordWithSpecialChar%^$@*";
-  private const string Issuer = "http://mysite.com";
-  private const string Audience = "http://myaudience.com";
-  private static readonly SymmetricSecurityKey SecurityKey = new(Encoding.ASCII.GetBytes(Secret));
+    private const string Secret = "ThisIsASuperMegaUltimateLongPasswordWithSpecialChar%^$@*";
+    private const string Issuer = "http://mysite.com";
+    private const string Audience = "http://myaudience.com";
+    private static readonly SymmetricSecurityKey SecurityKey = new(Encoding.ASCII.GetBytes(Secret));
 
-  public static string GenerateToken(int userId, string email)
-  {
-    var expirationDateTime = DateTime.Now.AddMinutes(30);
-    var expirationTimeString = expirationDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-
-    var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Secret));
-
-    var tokenHandler = new JwtSecurityTokenHandler();
-    var tokenDescriptor = new SecurityTokenDescriptor
+    public static string GenerateToken(int userId, string email)
     {
-      Subject = new ClaimsIdentity(new Claim[]
-      {
-        new(ClaimTypes.NameIdentifier, userId.ToString()),
-        new(ClaimTypes.Email, email),
-        new(ClaimTypes.Expiration, expirationTimeString)
-      }),
-      Expires = DateTime.UtcNow.AddDays(7),
-      Issuer = Issuer,
-      Audience = Audience,
-      SigningCredentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature)
-    };
+        var expirationDateTime = DateTime.Now.AddMinutes(30);
+        var expirationTimeString = expirationDateTime.ToString("yyyy-MM-dd HH:mm:ss");
 
-    var token = tokenHandler.CreateToken(tokenDescriptor);
-    return tokenHandler.WriteToken(token);
-  }
+        var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Secret));
 
-  public static bool ValidateToken(string token)
-  {
-    var tokenHandler = new JwtSecurityTokenHandler();
-    try
-    {
-      tokenHandler.ValidateToken(token, new TokenValidationParameters
-      {
-        ValidateIssuerSigningKey = true,
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidIssuer = Issuer,
-        ValidAudience = Audience,
-        IssuerSigningKey = SecurityKey
-      }, out var validatedToken);
-    }
-    catch
-    {
-      return false;
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+                new(ClaimTypes.NameIdentifier, userId.ToString()),
+                new(ClaimTypes.Email, email),
+                new(ClaimTypes.Expiration, expirationTimeString)
+            }),
+            Expires = DateTime.UtcNow.AddDays(7),
+            Issuer = Issuer,
+            Audience = Audience,
+            SigningCredentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
 
-    return true;
-  }
+    public static bool ValidateToken(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        try
+        {
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidIssuer = Issuer,
+                ValidAudience = Audience,
+                IssuerSigningKey = SecurityKey
+            }, out var validatedToken);
+        }
+        catch
+        {
+            return false;
+        }
 
-  public static string GetClaim(string token, string claimType)
-  {
-    var tokenHandler = new JwtSecurityTokenHandler();
-    var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+        return true;
+    }
 
-    var stringClaimValue = securityToken.Claims.First(claim => claim.Type == claimType)?.Value;
-    return stringClaimValue ?? "N/A";
-  }
+    public static string GetClaim(string token, string claimType)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+
+        var stringClaimValue = securityToken.Claims.First(claim => claim.Type == claimType)?.Value;
+        return stringClaimValue ?? "N/A";
+    }
 }

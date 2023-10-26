@@ -2,6 +2,6 @@
 
 internal interface ITextDocumentReader
 {
-  string Read(string filePath);
-  IEnumerable<string> ReadToCharArray(string filePath);
+    string Read(string filePath);
+    IEnumerable<string> ReadToCharArray(string filePath);
 }

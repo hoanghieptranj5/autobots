@@ -4,6 +4,6 @@ namespace HanziCollector.Abstraction;
 
 internal interface ICrawlerService
 {
-  Task<IEnumerable<string>> Crawl(string website);
-  Task<HanziFromHvDic> CrawlSingle(string hanzi);
+    Task<IEnumerable<string>> Crawl(string website);
+    Task<HanziFromHvDic> CrawlSingle(string hanzi);
 }

@@ -7,21 +7,21 @@ namespace HanziCollector.DI;
 
 public static class SetupServicesExtension
 {
-  public static void SetupHanziDependencies(this IServiceCollection services)
-  {
-    #region Internal Interfaces
+    public static void SetupHanziDependencies(this IServiceCollection services)
+    {
+        #region Internal Interfaces
 
-    services.AddScoped<ITextDocumentReader, TextDocumentReader>();
-    services.AddScoped<IHanziDbService, HanziDbService>();
-    services.AddScoped<ICrawlerService, CrawlerService>();
+        services.AddScoped<ITextDocumentReader, TextDocumentReader>();
+        services.AddScoped<IHanziDbService, HanziDbService>();
+        services.AddScoped<ICrawlerService, CrawlerService>();
 
-    #endregion
+        #endregion
 
-    #region Public Interfaces
+        #region Public Interfaces
 
-    services.AddScoped<IHanziService, HanziService>();
-    services.AddAutoMapper(typeof(HanziProfile));
+        services.AddScoped<IHanziService, HanziService>();
+        services.AddAutoMapper(typeof(HanziProfile));
 
-    #endregion
-  }
+        #endregion
+    }
 }

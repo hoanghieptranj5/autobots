@@ -10,24 +10,24 @@ using Repositories.UnitOfWork;
 using Repositories.UnitOfWork.Abstractions;
 
 var host = new HostBuilder()
-  .ConfigureFunctionsWorkerDefaults(worker =>
-  {
-    worker.UseMiddleware<AuthorizationMiddleware>();
-    worker.UseNewtonsoftJson();
-  })
-  .ConfigureOpenApi()
-  .ConfigureServices(services =>
-  {
-    var connectionString =
-      Environment.GetEnvironmentVariable("SqlConnectionString", EnvironmentVariableTarget.Process);
-    services.AddDbContext<ApplicationDbContext>(options =>
-      options.UseSqlServer(connectionString));
+    .ConfigureFunctionsWorkerDefaults(worker =>
+    {
+        worker.UseMiddleware<AuthorizationMiddleware>();
+        worker.UseNewtonsoftJson();
+    })
+    .ConfigureOpenApi()
+    .ConfigureServices(services =>
+    {
+        var connectionString =
+            Environment.GetEnvironmentVariable("SqlConnectionString", EnvironmentVariableTarget.Process);
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(connectionString));
 
-    services.AddScoped<IUnitOfWork, UnitOfWork>();
-    services.AddScoped<IElectricPriceService, ElectricPriceService>();
-    services.SetupIAMDependencies();
-    services.AddEndpointsApiExplorer();
-  })
-  .Build();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IElectricPriceService, ElectricPriceService>();
+        services.SetupIAMDependencies();
+        services.AddEndpointsApiExplorer();
+    })
+    .Build();
 
 host.Run();

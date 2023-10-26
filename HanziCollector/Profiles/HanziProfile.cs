@@ -6,8 +6,8 @@ namespace HanziCollector.Profiles;
 
 public class HanziProfile : Profile
 {
-  public HanziProfile()
-  {
-    CreateMap<HanziFromHvDic, Hanzi>();
-  }
+    public HanziProfile()
+    {
+        CreateMap<HanziFromHvDic, Hanzi>();
+    }
 }

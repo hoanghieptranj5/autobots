@@ -7,7 +7,7 @@ namespace Repositories.UnitOfWork;
 
 public class HanziRepository : Repository<Hanzi, string>, IHanziRepository
 {
-  public HanziRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
-  {
-  }
+    public HanziRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
+    {
+    }
 }

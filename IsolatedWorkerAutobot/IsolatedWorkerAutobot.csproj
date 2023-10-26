@@ -30,7 +30,7 @@
         <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\ElectricCalculator\ElectricCalculator.csproj" />
+        <ProjectReference Include="..\ElectricCalculator\ElectricCalculator.csproj"/>
         <ProjectReference Include="..\IAM\IAM.csproj"/>
     </ItemGroup>
 </Project>
