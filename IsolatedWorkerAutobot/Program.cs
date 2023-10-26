@@ -1,4 +1,4 @@
-using ElectricCalculator.Logics;
+using HanziCollector.DI;
 using IAM.DI;
 using IsolatedWorkerAutobot.Middlewares;
 using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
@@ -25,6 +25,8 @@ var host = new HostBuilder()
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IElectricPriceService, ElectricPriceService>();
+
+        services.SetupHanziDependencies();
         services.SetupIAMDependencies();
         services.AddEndpointsApiExplorer();
     })

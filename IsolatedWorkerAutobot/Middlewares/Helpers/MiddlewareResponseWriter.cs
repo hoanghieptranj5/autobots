@@ -1,8 +1,4 @@
-﻿using System.Net;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
-
-namespace IsolatedWorkerAutobot.Middlewares.Helpers;
+﻿namespace IsolatedWorkerAutobot.Middlewares.Helpers;
 
 public class MiddlewareResponseWriter
 {

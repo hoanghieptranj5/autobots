@@ -1,7 +1,7 @@
 namespace IsolatedWorkerAutobot.Functions;
 
 /// <summary>
-///   From V4 version, we move from HttpRequest to use HttpRequestData
+///     From V4 version, we move from HttpRequest to use HttpRequestData
 /// </summary>
 public class HttpExampleFunction
 {

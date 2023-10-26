@@ -1,10 +1,6 @@
-using System.Net;
-using IsolatedWorkerAutobot.CustomAttributes;
 using IsolatedWorkerAutobot.Exceptions;
 using IsolatedWorkerAutobot.Middlewares.Helpers;
-using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Middleware;
-using Microsoft.Extensions.Logging;
 
 namespace IsolatedWorkerAutobot.Middlewares;
 
@@ -29,7 +25,18 @@ public class AuthorizationMiddleware : IFunctionsWorkerMiddleware
 
             const string key = "code";
             var requestData = await context.GetHttpRequestDataAsync();
-            var token = requestData.Query.Get(key);
+            var bearerString = requestData.Query.Get(key);
+
+            if (bearerString == null || !bearerString.StartsWith("Bearer "))
+            {
+                const string message =
+                    "Token is missing the Bearer prefix.";
+                await MiddlewareResponseWriter.WriteAsJsonAsync(context, message, HttpStatusCode.BadRequest);
+                return;
+            }
+
+            var token = bearerString.Replace("Bearer ", string.Empty);
+
             try
             {
                 JwtTokenValidator.Verify(token);

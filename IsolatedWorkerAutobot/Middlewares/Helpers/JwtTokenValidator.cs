@@ -9,7 +9,7 @@ internal static class JwtTokenValidator
     #region Public Methods
 
     /// <summary>
-    ///   Three steps verifications
+    ///     Three steps verifications
     /// </summary>
     /// <param name="token"></param>
     /// <exception cref="TokenUnavailableException"></exception>

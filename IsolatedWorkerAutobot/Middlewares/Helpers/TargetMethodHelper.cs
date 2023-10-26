@@ -1,5 +1,4 @@
 using System.Reflection;
-using Microsoft.Azure.Functions.Worker;
 
 namespace IsolatedWorkerAutobot.Middlewares.Helpers;
 

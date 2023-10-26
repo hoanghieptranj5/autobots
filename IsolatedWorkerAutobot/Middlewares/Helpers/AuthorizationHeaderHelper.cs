@@ -1,5 +1,3 @@
-using Microsoft.Azure.Functions.Worker;
-
 namespace IsolatedWorkerAutobot.Middlewares.Helpers;
 
 internal static class AuthorizationHeaderHelper
