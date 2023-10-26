@@ -31,7 +31,4 @@
         <Folder Include="Extensions"/>
         <Folder Include="Helpers"/>
     </ItemGroup>
-    <ItemGroup>
-        <EditorConfigFiles Include=".editorconfig"/>
-    </ItemGroup>
 </Project>
