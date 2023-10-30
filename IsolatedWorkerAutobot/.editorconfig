@@ -1,0 +1,28 @@
+# EditorConfig root file: http://editorconfig.org
+
+# Set the root directory for all EditorConfig files in this project
+root = true
+
+# Indentation
+[*.{cs,csx}]
+indent_style = space
+indent_size = 4
+
+# Line endings
+end_of_line = lf
+
+# Character encoding
+charset = utf-8
+
+# Trimming whitespace
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Newline at the end of the file
+ensure_newline_at_eof = true
+
+# Common code style settings
+[*.cs]
+# Example rules for ordering using statements
+dotnet_sort_system_directives_first = true
+csharp_sort_system_directives_first = true

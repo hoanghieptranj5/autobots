@@ -6,8 +6,7 @@ namespace Repositories.Models.Users;
 [Index(nameof(Username))]
 public class User
 {
-    [Key]
-    public int Id { get; set; }
+    [Key] public int Id { get; set; }
 
     [Required]
     [MaxLength(50)] // Define a suitable maximum length for your username
@@ -21,11 +20,9 @@ public class User
     [MaxLength(100)] // Define a suitable maximum length for hashed password storage
     public string PasswordHash { get; set; }
 
-    [MaxLength(50)]
-    public string FirstName { get; set; }
+    [MaxLength(50)] public string FirstName { get; set; }
 
-    [MaxLength(50)]
-    public string LastName { get; set; }
+    [MaxLength(50)] public string LastName { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

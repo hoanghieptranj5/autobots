@@ -2,10 +2,10 @@
 
 public interface IUnitOfWork
 {
-  ICarRepository Cars { get; set; }
-  IElectricPriceRepository ElectricPrices { get; set; }
-  IHanziRepository Hanzis { get; set; }
-  IUserRepository Users { get; set; }
+    ICarRepository Cars { get; set; }
+    IElectricPriceRepository ElectricPrices { get; set; }
+    IHanziRepository Hanzis { get; set; }
+    IUserRepository Users { get; set; }
 
-  Task CompleteAsync();
+    Task CompleteAsync();
 }

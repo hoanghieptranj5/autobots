@@ -1,0 +1,10 @@
+global using System.Net;
+global using ElectricCalculator.Logics;
+global using IsolatedWorkerAutobot.CustomAttributes;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Azure.Functions.Worker;
+global using Microsoft.Azure.Functions.Worker.Http;
+global using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+global using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.OpenApi.Models;

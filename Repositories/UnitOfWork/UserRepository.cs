@@ -7,7 +7,7 @@ namespace Repositories.UnitOfWork;
 
 public class UserRepository : Repository<User, int>, IUserRepository
 {
-  public UserRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
-  {
-  }
+    public UserRepository(ApplicationDbContext dbContext, ILogger logger) : base(dbContext, logger)
+    {
+    }
 }
