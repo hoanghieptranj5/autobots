@@ -20,7 +20,6 @@ public partial class ApplicationDbContext : DbContext
         _logger = loggerFactory.CreateLogger("DbLogger");
     }
 
-    public virtual DbSet<Car> Cars { get; set; }
     public virtual DbSet<ElectricPrice> ElectricPrices { get; set; }
     public virtual DbSet<Hanzi> Hanzis { get; set; }
     public virtual DbSet<User> Users { get; set; }
