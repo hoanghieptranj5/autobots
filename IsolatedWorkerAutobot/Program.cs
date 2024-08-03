@@ -24,6 +24,7 @@ var host = new HostBuilder()
             options.UseSqlServer(connectionString));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ICalculationLogic, CalculationLogic>();
         services.AddScoped<IElectricPriceService, ElectricPriceService>();
 
         services.SetupHanziDependencies();
