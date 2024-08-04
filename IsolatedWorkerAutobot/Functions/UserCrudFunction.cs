@@ -19,7 +19,7 @@ public class UserCrudFunction
     [Authorize]
     [OpenApiOperation("GetUserList", "User", Summary = "GetUserList",
         Description = "This gets a list of users.", Visibility = OpenApiVisibilityType.Important)]
-    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Query)]
+    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Header)]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
         Summary = "The response", Description = "This returns the response")]
     [Function("GetUserList")]
@@ -69,7 +69,7 @@ public class UserCrudFunction
     [Authorize]
     [OpenApiOperation("AddSingleUser", "User", Summary = "AddSingleUser",
         Description = "This adds a new user to system.", Visibility = OpenApiVisibilityType.Important)]
-    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Query)]
+    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Header)]
     [OpenApiRequestBody("application/json", typeof(CreateUserRequest), Description = "Parameters",
         Example = typeof(CreateUserRequest))]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
@@ -90,7 +90,7 @@ public class UserCrudFunction
     [Authorize]
     [OpenApiOperation("DeleteSingleUser", "User", Summary = "DeleteSingleUser",
         Description = "This remove a user of system.", Visibility = OpenApiVisibilityType.Important)]
-    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Query)]
+    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Header)]
     [OpenApiParameter("username", Type = typeof(string))]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
         Summary = "The response", Description = "This returns the response")]

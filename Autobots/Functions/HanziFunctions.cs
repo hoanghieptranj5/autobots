@@ -59,7 +59,7 @@ public class HanziFunctions
         Visibility = OpenApiVisibilityType.Important)]
     [OpenApiSecurity("apikeyquery_auth",
         SecuritySchemeType.ApiKey,
-        In = OpenApiSecurityLocationType.Query,
+        In = OpenApiSecurityLocationType.Header,
         Name = "token")]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "application/json", typeof(Dictionary<string, string>),
         Summary = "successful operation", Description = "successful operation")]

@@ -25,7 +25,7 @@ public class AuthorizationMiddleware : IFunctionsWorkerMiddleware
             _logger.LogDebug($"This method {targetMethod.Name} requires authorization.");
 
             var requestData = await context.GetHttpRequestDataAsync();
-            var bearerString = requestData.Query.Get(AuthCode.Token);
+            var bearerString = requestData.Headers.GetValues(AuthCode.Token).FirstOrDefault();
 
             if (bearerString == null || !bearerString.StartsWith("Bearer "))
             {

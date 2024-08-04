@@ -15,7 +15,7 @@ public class HanziFunctions
     [Authorize]
     [OpenApiOperation("GetInformationSingle", "Hanzi", Summary = "GetInformationSingle",
         Description = "This gets information of single hanzi.", Visibility = OpenApiVisibilityType.Important)]
-    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Query)]
+    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Header)]
     [OpenApiParameter("id", Type = typeof(string))]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
         Summary = "The response", Description = "This returns the response")]

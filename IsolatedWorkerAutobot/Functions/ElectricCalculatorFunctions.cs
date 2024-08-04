@@ -7,7 +7,7 @@ public class ElectricCalculatorFunctions(IElectricPriceService electricPriceServ
     [Authorize]
     [OpenApiOperation("GetElectricPrices", "ElectricPrice", Summary = "GetElectricPrices",
         Description = "This gets a list of electricPrice.", Visibility = OpenApiVisibilityType.Important)]
-    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Query)]
+    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Header)]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
         Summary = "The response", Description = "This returns the response")]
     [Function("GetElectricPrices")]
@@ -23,7 +23,7 @@ public class ElectricCalculatorFunctions(IElectricPriceService electricPriceServ
     [Authorize]
     [OpenApiOperation("CalculateUsage", "Usage", Summary = "CalculateUsage",
         Description = "This gets a list of CalculateUsage.", Visibility = OpenApiVisibilityType.Important)]
-    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Query)]
+    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = AuthCode.Token, In = OpenApiSecurityLocationType.Header)]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
         Summary = "The response", Description = "This returns the response")]
     [OpenApiParameter("value", Type = typeof(int))]
