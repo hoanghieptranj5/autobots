@@ -14,7 +14,7 @@ public class HttpExampleFunction
 
     [AllowAnonymous]
     // 👇👇👇👇👇 Add OpenAPI related decorators below 👇👇👇👇👇
-    [OpenApiOperation("greeting", "greeting", Summary = "Greetings",
+    [OpenApiOperation("What the hell is this function", "whatIsThis", Summary = "Greetings",
         Description = "This shows a welcome message.", Visibility = OpenApiVisibilityType.Important)]
     [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string),
         Summary = "The response", Description = "This returns the response")]
