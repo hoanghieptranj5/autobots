@@ -23,6 +23,7 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<ElectricPrice> ElectricPrices { get; set; }
     public virtual DbSet<Hanzi> Hanzis { get; set; }
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Vocabulary.Vocabulary> Vocabularies { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -30,6 +31,7 @@ public partial class ApplicationDbContext : DbContext
 
         if (!optionsBuilder.IsConfigured)
         {
+
         }
     }
 }

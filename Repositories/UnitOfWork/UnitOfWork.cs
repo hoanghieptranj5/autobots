@@ -11,6 +11,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IElectricPriceRepository ElectricPrices { get; set; }
     public IHanziRepository Hanzis { get; set; }
     public IUserRepository Users { get; set; }
+    public IVocabularyRepository Vocabularies { get; set; }
 
     public UnitOfWork(ApplicationDbContext dbContext, ILoggerFactory loggerFactory)
     {
@@ -20,6 +21,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         ElectricPrices = new ElectricPriceRepository(dbContext, logger);
         Hanzis = new HanziRepository(dbContext, logger);
         Users = new UserRepository(dbContext, logger);
+        Vocabularies = new VocabularyRepository(dbContext, logger);
     }
 
     public async Task CompleteAsync()
