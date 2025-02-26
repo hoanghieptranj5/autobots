@@ -1,6 +1,10 @@
+using HanziCollector.Abstraction;
 using HanziCollector.DI;
+using HanziCollector.Implementations;
 using IAM.DI;
+using IsolatedWorkerAutobot.Mappers;
 using IsolatedWorkerAutobot.Middlewares;
+using IsolatedWorkerAutobot.ValuedObjects;
 using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +30,9 @@ var host = new HostBuilder()
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ICalculationLogic, CalculationLogic>();
         services.AddScoped<IElectricPriceService, ElectricPriceService>();
+        services.AddScoped<IVocabularyDbService, VocabularyDbService>();
+
+        services.AddAutoMapper(typeof(VocabularyProfile));
 
         services.SetupHanziDependencies();
         services.SetupIAMDependencies();
