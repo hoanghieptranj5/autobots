@@ -3,6 +3,7 @@ using CosmosRepository.Clients;
 using CosmosRepository.Contracts;
 using CosmosRepository.Entities;
 using Microsoft.Azure.Cosmos;
+using Microsoft.Azure.Cosmos.Linq;
 
 namespace CosmosRepository.Implementations;
 
@@ -90,8 +91,18 @@ public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
 
     public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
     {
-        // Fetch all and filter in memory (not ideal for big datasets)
-        var allItems = await All();
-        return allItems.AsQueryable().Where(predicate);
+        var query = _container.GetItemLinqQueryable<T>(allowSynchronousQueryExecution: false)
+            .Where(predicate)
+            .ToFeedIterator();
+
+        var results = new List<T>();
+
+        while (query.HasMoreResults)
+        {
+            var response = await query.ReadNextAsync();
+            results.AddRange(response);
+        }
+
+        return results;
     }
 }

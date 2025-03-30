@@ -1,6 +1,7 @@
 ﻿using CosmosRepository.Contracts;
 using CosmosRepository.Entities.HanziCollector;
 using HanziCollector.Abstraction;
+using Microsoft.Azure.Cosmos;
 
 namespace HanziCollector.Implementations;
 
@@ -39,9 +40,14 @@ public class HanziDbService : IHanziDbService
         return result.ToList();
     }
 
-    public Task<IEnumerable<Hanzi>> ReadRandomHanziList()
+    public async Task<IEnumerable<Hanzi>> ReadRandomHanziList(int length = 20)
     {
-        throw new NotImplementedException();
+        const int maxInsertedOrder = 1800;
+        int randomStart = new Random().Next(1, maxInsertedOrder - length);
+
+        var hanziList = await _unitOfWork.Hanzis.Find(x => x.InsertedOrder >= randomStart);
+        var result = hanziList.OrderBy(x => x.InsertedOrder).Take(length);
+        return result;
     }
 
     public async Task<bool> DeleteSingle(string id)

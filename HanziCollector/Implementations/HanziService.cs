@@ -48,12 +48,7 @@ internal class HanziService : IHanziService
 
     public async Task<IEnumerable<Hanzi>> GetRandomList(int length, int min, int max)
     {
-        var random = new Random();
-        var indices = Enumerable.Range(1, length)
-            .Select(_ => random.Next(min, max))
-            .ToList();
-
-        return await _unitOfWork.Hanzis.All();
+        return await _hanziDbService.ReadRandomHanziList(length);
     }
 
     public async Task<bool> Delete(string id)
