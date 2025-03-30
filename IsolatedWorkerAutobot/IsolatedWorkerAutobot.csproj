@@ -30,6 +30,7 @@
         <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext"/>
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\CosmosRepository\CosmosRepository.csproj" />
         <ProjectReference Include="..\ElectricCalculator\ElectricCalculator.csproj"/>
         <ProjectReference Include="..\HanziCollector\HanziCollector.csproj"/>
         <ProjectReference Include="..\IAM\IAM.csproj"/>
