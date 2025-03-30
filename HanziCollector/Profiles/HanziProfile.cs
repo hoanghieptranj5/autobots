@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using CosmosRepository.Entities.HanziCollector;
 using HanziCollector.Models;
-using Repositories.Models.HanziCollector;
 
 namespace HanziCollector.Profiles;
 

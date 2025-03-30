@@ -1,4 +1,5 @@
-using Repositories.Models.Vocabulary;
+
+using CosmosRepository.Entities.Vocabulary;
 
 namespace HanziCollector.Abstraction;
 

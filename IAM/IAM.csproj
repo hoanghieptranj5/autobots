@@ -11,12 +11,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Repositories\Repositories.csproj"/>
+      <ProjectReference Include="..\CosmosRepository\CosmosRepository.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"/>
         <PackageReference Include="BCrypt.Net-Core" Version="1.6.0"/>
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.7.0" />
     </ItemGroup>
 
 </Project>

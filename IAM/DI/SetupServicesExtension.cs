@@ -1,9 +1,10 @@
+using CosmosRepository.Contracts;
+using CosmosRepository.Implementations;
 using IAM.Interfaces;
 using IAM.Mapper;
 using IAM.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Repositories.UnitOfWork;
-using Repositories.UnitOfWork.Abstractions;
+
 
 namespace IAM.DI;
 

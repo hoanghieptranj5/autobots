@@ -1,9 +1,10 @@
 using AutoMapper;
+using CosmosRepository.Contracts;
+using CosmosRepository.Entities.Users;
 using IAM.Helper;
 using IAM.Interfaces;
 using IAM.ValuedObjects;
-using Repositories.Models.Users;
-using Repositories.UnitOfWork.Abstractions;
+
 
 namespace IAM.Services;
 
@@ -24,7 +25,7 @@ public class UserService : IUserService
         savingUser.CreatedAt = DateTime.Now;
         savingUser.UpdatedAt = DateTime.Now;
         var result = await _unitOfWork.Users.Add(savingUser);
-        await _unitOfWork.CompleteAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return result ? _mapper.Map<UserExport>(savingUser) : null;
     }
@@ -52,7 +53,7 @@ public class UserService : IUserService
         if (user == null || !enumerable.Any()) throw new Exception("User not found");
 
         await _unitOfWork.Users.Delete(enumerable.FirstOrDefault()!.Id);
-        await _unitOfWork.CompleteAsync();
+        await _unitOfWork.SaveChangesAsync();
         return _mapper.Map<UserExport>(user);
     }
 

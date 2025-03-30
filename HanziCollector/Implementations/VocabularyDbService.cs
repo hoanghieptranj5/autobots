@@ -1,8 +1,7 @@
 using AutoMapper;
+using CosmosRepository.Contracts;
+using CosmosRepository.Entities.Vocabulary;
 using HanziCollector.Abstraction;
-using Microsoft.Extensions.Logging;
-using Repositories.Models.Vocabulary;
-using Repositories.UnitOfWork.Abstractions;
 
 namespace HanziCollector.Implementations;
 
@@ -23,7 +22,7 @@ public class VocabularyDbService : IVocabularyDbService
         try
         {
             inserted = await _unitOfWork.Vocabularies.Add(vocabulary);
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -57,7 +56,7 @@ public class VocabularyDbService : IVocabularyDbService
     public async Task<bool> UpdateSingle(Vocabulary vocabulary)
     {
         await _unitOfWork.Vocabularies.Upsert(vocabulary);
-        await _unitOfWork.CompleteAsync();
+        await _unitOfWork.SaveChangesAsync();
         return true;
     }
 }

@@ -1,4 +1,6 @@
 using CosmosRepository.Clients;
+using CosmosRepository.Contracts;
+using CosmosRepository.Implementations;
 using HanziCollector.DI;
 using IAM.DI;
 using IsolatedWorkerAutobot.Mappers;
@@ -6,8 +8,7 @@ using IsolatedWorkerAutobot.Middlewares;
 using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Repositories.UnitOfWork;
-using Repositories.UnitOfWork.Abstractions;
+
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults(worker =>

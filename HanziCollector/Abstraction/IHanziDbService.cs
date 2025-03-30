@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Repositories.Models.HanziCollector;
+using CosmosRepository.Entities.HanziCollector;
 
 namespace HanziCollector.Abstraction;
 

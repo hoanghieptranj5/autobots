@@ -1,6 +1,6 @@
 using AutoMapper;
+using CosmosRepository.Entities.ElectricCalculator;
 using ElectricCalculator.Models;
-using Repositories.Models.ElectricCalculator;
 
 namespace ElectricCalculator.Profiles;
 

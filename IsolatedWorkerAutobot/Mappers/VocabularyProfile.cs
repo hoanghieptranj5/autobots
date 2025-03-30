@@ -1,6 +1,6 @@
 using AutoMapper;
+using CosmosRepository.Entities.Vocabulary;
 using IsolatedWorkerAutobot.ValuedObjects;
-using Repositories.Models.Vocabulary;
 
 namespace IsolatedWorkerAutobot.Mappers;
 

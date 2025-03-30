@@ -1,10 +1,10 @@
 using AutoMapper;
+using CosmosRepository.Entities.Vocabulary;
 using HanziCollector.Abstraction;
 using IAM.ValuedObjects;
 using IsolatedWorkerAutobot.Constants;
 using IsolatedWorkerAutobot.ValuedObjects;
 using Newtonsoft.Json;
-using Repositories.Models.Vocabulary;
 
 namespace IsolatedWorkerAutobot.Functions;
 

@@ -1,7 +1,6 @@
-﻿using HanziCollector.Abstraction;
-using Microsoft.EntityFrameworkCore;
-using Repositories.Models.HanziCollector;
-using Repositories.UnitOfWork.Abstractions;
+﻿using CosmosRepository.Contracts;
+using CosmosRepository.Entities.HanziCollector;
+using HanziCollector.Abstraction;
 
 namespace HanziCollector.Implementations;
 
@@ -17,7 +16,7 @@ public class HanziDbService : IHanziDbService
     public async Task<bool> SaveSingle(Hanzi hanzi)
     {
         var completed = await _unitOfWork.Hanzis.Add(hanzi);
-        await _unitOfWork.CompleteAsync();
+        await _unitOfWork.SaveChangesAsync();
         return completed;
     }
 
@@ -33,12 +32,11 @@ public class HanziDbService : IHanziDbService
 
     public async Task<IEnumerable<Hanzi>> ReadRange(int skip, int take)
     {
-        var result = await _unitOfWork.Hanzis
+        var result = _unitOfWork.Hanzis
             .AllQuery()
             .Skip(skip)
-            .Take(take)
-            .ToListAsync();
-        return result;
+            .Take(take);
+        return result.ToList();
     }
 
     public Task<IEnumerable<Hanzi>> ReadRandomHanziList()
@@ -49,7 +47,7 @@ public class HanziDbService : IHanziDbService
     public async Task<bool> DeleteSingle(string id)
     {
         var completed = await _unitOfWork.Hanzis.Delete(id);
-        await _unitOfWork.CompleteAsync();
+        await _unitOfWork.SaveChangesAsync();
         return completed;
     }
 
