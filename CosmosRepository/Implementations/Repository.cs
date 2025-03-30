@@ -11,9 +11,9 @@ public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
 {
     private readonly Container _container;
 
-    public Repository(CosmosDbContext cosmosDbContext, string containerName)
+    public Repository(CosmosDbContext cosmosDbContext, string containerName, string partitionKeyPath)
     {
-        _container = cosmosDbContext.GetContainer(containerName);
+        _container = cosmosDbContext.GetContainer(containerName, partitionKeyPath);
     }
 
     public async Task<IEnumerable<T>> All()

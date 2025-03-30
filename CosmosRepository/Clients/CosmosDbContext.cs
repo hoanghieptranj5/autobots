@@ -22,8 +22,8 @@ public class CosmosDbContext
         _database = _client.CreateDatabaseIfNotExistsAsync(config.DatabaseName).GetAwaiter().GetResult();
     }
 
-    public Container GetContainer(string containerName)
+    public Container GetContainer(string containerName, string partitionKeyPath)
     {
-        return _database.CreateContainerIfNotExistsAsync(containerName, "/Id").GetAwaiter().GetResult();
+        return _database.CreateContainerIfNotExistsAsync(containerName, partitionKeyPath).GetAwaiter().GetResult();
     }
 }
