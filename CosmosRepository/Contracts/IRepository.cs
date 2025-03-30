@@ -12,4 +12,5 @@ public interface IRepository<T, R> where T : BaseEntity
     Task<bool> Delete(R id);
     Task<bool> Upsert(T entity);
     Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate);
+    Task<IEnumerable<T>> SelectIn(List<int> secondaryFieldIds);
 }

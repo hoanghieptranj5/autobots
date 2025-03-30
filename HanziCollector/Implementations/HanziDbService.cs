@@ -40,14 +40,22 @@ public class HanziDbService : IHanziDbService
         return result.ToList();
     }
 
-    public async Task<IEnumerable<Hanzi>> ReadRandomHanziList(int length = 20)
+    public async Task<IEnumerable<Hanzi>> ReadRandomHanziList(int count = 20)
     {
-        const int maxInsertedOrder = 1800;
-        int randomStart = new Random().Next(1, maxInsertedOrder - length);
+        const int maxRange = 3000;
+        var random = new Random();
 
-        var hanziList = await _unitOfWork.Hanzis.Find(x => x.InsertedOrder >= randomStart);
-        var result = hanziList.OrderBy(x => x.InsertedOrder).Take(length);
-        return result;
+        // Generate a HashSet to avoid duplicates
+        var orderIds = new HashSet<int>();
+        while (orderIds.Count < count)
+        {
+            orderIds.Add(random.Next(1, maxRange + 1)); // +1 because upper bound is exclusive
+        }
+
+        var randomOrderIdList = orderIds.ToList();
+
+        // Call your existing method with the random list
+        return await _unitOfWork.Hanzis.SelectIn(randomOrderIdList);
     }
 
     public async Task<bool> DeleteSingle(string id)

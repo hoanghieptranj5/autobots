@@ -105,4 +105,27 @@ public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
 
         return results;
     }
+
+    public async Task<IEnumerable<T>> SelectIn(List<int> secondaryFieldIds)
+    {
+        // Split the list into comma-separated values
+        var idsParam = string.Join(", ", secondaryFieldIds);
+
+        // TODO: need to replace this hardcoded in the future
+        var queryText = $"SELECT * FROM c WHERE c.InsertedOrder IN ({idsParam})";
+
+        var query = _container.GetItemQueryIterator<T>(
+            new QueryDefinition(queryText)
+        );
+
+        var results = new List<T>();
+
+        while (query.HasMoreResults)
+        {
+            var response = await query.ReadNextAsync();
+            results.AddRange(response);
+        }
+
+        return results;
+    }
 }
