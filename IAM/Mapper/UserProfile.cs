@@ -1,7 +1,7 @@
 using AutoMapper;
+using CosmosRepository.Entities.Users;
 using IAM.Helper;
 using IAM.ValuedObjects;
-using Repositories.Models.Users;
 
 namespace IAM.Mapper;
 

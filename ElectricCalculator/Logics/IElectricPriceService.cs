@@ -1,4 +1,4 @@
-﻿using Repositories.Models.ElectricCalculator;
+﻿using CosmosRepository.Entities.ElectricCalculator;
 
 namespace ElectricCalculator.Logics;
 

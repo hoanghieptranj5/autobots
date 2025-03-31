@@ -12,7 +12,7 @@ public static class JwtHelper
     private const string Audience = "http://myaudience.com";
     private static readonly SymmetricSecurityKey SecurityKey = new(Encoding.ASCII.GetBytes(Secret));
 
-    public static string GenerateToken(int userId, string email)
+    public static string GenerateToken(string userId, string email)
     {
         var expirationDateTime = DateTime.Now.AddMinutes(30);
         var expirationTimeString = expirationDateTime.ToString("yyyy-MM-dd HH:mm:ss");
@@ -24,7 +24,7 @@ public static class JwtHelper
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                new(ClaimTypes.NameIdentifier, userId.ToString()),
+                new(ClaimTypes.NameIdentifier, userId),
                 new(ClaimTypes.Email, email),
                 new(ClaimTypes.Expiration, expirationTimeString)
             }),

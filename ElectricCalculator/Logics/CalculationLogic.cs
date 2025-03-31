@@ -1,6 +1,7 @@
-﻿using ElectricCalculator.Models;
-using Repositories.Models.ElectricCalculator;
-using Repositories.UnitOfWork.Abstractions;
+﻿using CosmosRepository.Contracts;
+using CosmosRepository.Entities.ElectricCalculator;
+using ElectricCalculator.Models;
+
 
 namespace ElectricCalculator.Logics;
 

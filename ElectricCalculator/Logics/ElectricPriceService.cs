@@ -1,5 +1,5 @@
-﻿using Repositories.Models.ElectricCalculator;
-using Repositories.UnitOfWork.Abstractions;
+﻿using CosmosRepository.Contracts;
+using CosmosRepository.Entities.ElectricCalculator;
 
 namespace ElectricCalculator.Logics;
 
@@ -14,7 +14,7 @@ public class ElectricPriceService : IElectricPriceService
 
     public async Task<ElectricPrice?> GetSingle(int id)
     {
-        return await _unitOfWork.ElectricPrices.GetById(id);
+        return await _unitOfWork.ElectricPrices.GetById(id.ToString());
     }
 
     public async Task<IEnumerable<ElectricPrice>> GetAll()
@@ -25,21 +25,21 @@ public class ElectricPriceService : IElectricPriceService
     public async Task<bool> InsertSingle(ElectricPrice e)
     {
         var result = await _unitOfWork.ElectricPrices.Add(e);
-        await _unitOfWork.CompleteAsync();
+        await _unitOfWork.SaveChangesAsync();
         return result;
     }
 
     public async Task<bool> RemoveSingle(int id)
     {
-        var result = await _unitOfWork.ElectricPrices.Delete(id);
-        await _unitOfWork.CompleteAsync();
+        var result = await _unitOfWork.ElectricPrices.Delete(id.ToString());
+        await _unitOfWork.SaveChangesAsync();
         return result;
     }
 
     public async Task<bool> UpdateSingle(ElectricPrice e)
     {
         var result = await _unitOfWork.ElectricPrices.Add(e);
-        await _unitOfWork.CompleteAsync();
+        await _unitOfWork.SaveChangesAsync();
         return result;
     }
 }

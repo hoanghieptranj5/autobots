@@ -1,42 +1,59 @@
-using HanziCollector.Abstraction;
+using CosmosRepository.Clients;
+using CosmosRepository.Contracts;
+using CosmosRepository.Implementations;
+using CosmosRepository.Settings;
+using ElectricCalculator.DI;
 using HanziCollector.DI;
-using HanziCollector.Implementations;
 using IAM.DI;
 using IsolatedWorkerAutobot.Mappers;
 using IsolatedWorkerAutobot.Middlewares;
-using IsolatedWorkerAutobot.ValuedObjects;
 using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Repositories.Models;
-using Repositories.UnitOfWork;
-using Repositories.UnitOfWork.Abstractions;
 
 var host = new HostBuilder()
+    .ConfigureAppConfiguration(config =>
+    {
+        config.AddJsonFile("local.settings.json", optional: true, reloadOnChange: true);
+        config.AddEnvironmentVariables(); // Load env vars from Azure Function config or local env
+    })
     .ConfigureFunctionsWorkerDefaults(worker =>
     {
         worker.UseMiddleware<AuthorizationMiddleware>();
         worker.UseNewtonsoftJson();
     })
     .ConfigureOpenApi()
-    .ConfigureServices(services =>
+    .ConfigureServices((context, services) =>
     {
-        var connectionString =
-            Environment.GetEnvironmentVariable("SqlConnectionString", EnvironmentVariableTarget.Process);
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        // 💡 Get connection string from environment variable
+        var cosmosConnection = Environment.GetEnvironmentVariable("COSMOSDB_CONNECTIONSTRING");
+        var databaseName = Environment.GetEnvironmentVariable("COSMOSDB_DATABASE");
 
+        if (string.IsNullOrEmpty(cosmosConnection))
+            throw new InvalidOperationException("COSMOSDB_CONNECTIONSTRING is not set in environment variables.");
+
+        if (string.IsNullOrEmpty(databaseName))
+            throw new InvalidOperationException("COSMOSDB_DATABASE is not set in environment variables.");
+
+        services.Configure<CosmosDbSettings>(options =>
+        {
+            options.ConnectionString = cosmosConnection;
+            options.DatabaseName = databaseName;
+        });
+
+        // 🔧 Register services
+        services.AddSingleton<CosmosDbContext>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<ICalculationLogic, CalculationLogic>();
-        services.AddScoped<IElectricPriceService, ElectricPriceService>();
-        services.AddScoped<IVocabularyDbService, VocabularyDbService>();
 
         services.AddAutoMapper(typeof(VocabularyProfile));
-
         services.SetupHanziDependencies();
+        services.SetupElectricityPriceDependencies();
         services.SetupIAMDependencies();
         services.AddEndpointsApiExplorer();
+
+        // 👀 Optional: debug output
+        Console.WriteLine($"[DEBUG] CosmosDbSettings loaded: {(string.IsNullOrEmpty(cosmosConnection) ? "MISSING" : "OK")}");
     })
     .Build();
 
