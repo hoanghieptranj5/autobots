@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using CosmosRepository.Clients;
 using CosmosRepository.Contracts;
 using CosmosRepository.Entities;
+using CosmosRepository.Entities.HanziCollector;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 
@@ -127,5 +128,44 @@ public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
         }
 
         return results;
+    }
+
+    public async Task<List<Hanzi>> GetRandomHanziList(int count)
+    {
+        var random = new Random();
+        var results = new List<Hanzi>();
+        var usedBuckets = new HashSet<int>();
+
+        while (results.Count < count && usedBuckets.Count < 10)
+        {
+            int bucket;
+
+            // Pick a new random bucket that hasn't been used yet
+            do
+            {
+                bucket = random.Next(1, 11); // 1 to 10
+            } while (usedBuckets.Contains(bucket));
+
+            usedBuckets.Add(bucket);
+
+            // Query from the selected bucket
+            var query = _container.GetItemLinqQueryable<Hanzi>(
+                    requestOptions: new QueryRequestOptions
+                    {
+                        PartitionKey = new PartitionKey(bucket),
+                        MaxItemCount = count
+                    })
+                .Take(count - results.Count)
+                .ToFeedIterator();
+
+            while (query.HasMoreResults && results.Count < count)
+            {
+                var response = await query.ReadNextAsync();
+                results.AddRange(response);
+            }
+        }
+
+        // Optional: shuffle the results
+        return results.OrderBy(x => Guid.NewGuid()).Take(count).ToList();
     }
 }

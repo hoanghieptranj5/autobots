@@ -9,7 +9,7 @@ namespace CosmosRepository.Implementations;
 
 public class UnitOfWork(CosmosDbContext context) : IUnitOfWork
 {
-    private IRepository<Hanzi, string> _hanziRepository = new Repository<Hanzi, string>(context, "Hanzi", "/Bucket");
+    private IRepository<Hanzi, string> _hanziRepository = new Repository<Hanzi, string>(context, "Hanzis", "/Bucket");
     private IRepository<ElectricPrice, string> _electricPriceRepository = new Repository<ElectricPrice, string>(context, "ElectricPrice", "/Id");
     private IRepository<User, string> _userRepository = new Repository<User, string>(context, "User", "/Username");
     private IRepository<Vocabulary, string> _vocabularyRepository = new Repository<Vocabulary, string>(context, "Vocabulary", "/Id");

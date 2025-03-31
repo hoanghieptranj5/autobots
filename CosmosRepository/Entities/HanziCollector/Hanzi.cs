@@ -12,4 +12,6 @@ public class Hanzi : BaseEntity
     /// Indexed field, used for quickly randomly access a Hanzi Character
     /// </summary>
     public int InsertedOrder { get; set; }
+
+    public int Bucket { get; set; }
 }
