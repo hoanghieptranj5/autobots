@@ -13,12 +13,12 @@ public class CosmosDbContext
     {
         var config = options.Value;
 
-        if (string.IsNullOrEmpty(config.Key))
+        if (string.IsNullOrEmpty(config.ConnectionString))
         {
-            throw new ArgumentNullException(nameof(config.Key), "CosmosDb key is missing.");
+            throw new ArgumentNullException(nameof(config.ConnectionString), "ConnectionString key is missing.");
         }
 
-        _client = new CosmosClient(config.Account, config.Key);
+        _client = new CosmosClient(config.ConnectionString);
         _database = _client.CreateDatabaseIfNotExistsAsync(config.DatabaseName).GetAwaiter().GetResult();
     }
 

@@ -12,12 +12,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-
 var host = new HostBuilder()
     .ConfigureAppConfiguration(config =>
     {
         config.AddJsonFile("local.settings.json", optional: true, reloadOnChange: true);
-        config.AddEnvironmentVariables(); // in case you're using secrets in production
+        config.AddEnvironmentVariables(); // Load env vars from Azure Function config or local env
     })
     .ConfigureFunctionsWorkerDefaults(worker =>
     {
@@ -27,15 +26,23 @@ var host = new HostBuilder()
     .ConfigureOpenApi()
     .ConfigureServices((context, services) =>
     {
-        // Bind config to a strongly typed options class (recommended)
-        services.Configure<CosmosDbSettings>(context.Configuration.GetSection("CosmosDb"));
-        var cosmosConfig = context.Configuration.GetSection("CosmosDb").Get<CosmosDbSettings>();
-        Console.WriteLine($"[DEBUG] Cosmos Account: {cosmosConfig?.Account}");
-        Console.WriteLine($"[DEBUG] Cosmos Key: {(string.IsNullOrEmpty(cosmosConfig?.Key) ? "MISSING" : "LOADED")}");
+        // 💡 Get connection string from environment variable
+        var cosmosConnection = Environment.GetEnvironmentVariable("COSMOSDB_CONNECTIONSTRING");
+        var databaseName = Environment.GetEnvironmentVariable("COSMOSDB_DATABASE");
 
-        services.Configure<CosmosDbSettings>(context.Configuration.GetSection("CosmosDb"));
+        if (string.IsNullOrEmpty(cosmosConnection))
+            throw new InvalidOperationException("COSMOSDB_CONNECTIONSTRING is not set in environment variables.");
 
-        // Register services
+        if (string.IsNullOrEmpty(databaseName))
+            throw new InvalidOperationException("COSMOSDB_DATABASE is not set in environment variables.");
+
+        services.Configure<CosmosDbSettings>(options =>
+        {
+            options.ConnectionString = cosmosConnection;
+            options.DatabaseName = databaseName;
+        });
+
+        // 🔧 Register services
         services.AddSingleton<CosmosDbContext>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -44,8 +51,10 @@ var host = new HostBuilder()
         services.SetupElectricityPriceDependencies();
         services.SetupIAMDependencies();
         services.AddEndpointsApiExplorer();
+
+        // 👀 Optional: debug output
+        Console.WriteLine($"[DEBUG] CosmosDbSettings loaded: {(string.IsNullOrEmpty(cosmosConnection) ? "MISSING" : "OK")}");
     })
     .Build();
 
 host.Run();
-
