@@ -133,39 +133,31 @@ public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
     public async Task<List<Hanzi>> GetRandomHanziList(int count)
     {
         var random = new Random();
-        var results = new List<Hanzi>();
-        var usedBuckets = new HashSet<int>();
 
-        while (results.Count < count && usedBuckets.Count < 10)
+        // Step 1: Pick one random bucket (partition)
+        int bucket = random.Next(1, 11); // 1 to 10
+
+        // Step 2: Fetch all items from that partition
+        var allItems = new List<Hanzi>();
+
+        var query = _container.GetItemLinqQueryable<Hanzi>(
+                requestOptions: new QueryRequestOptions
+                {
+                    PartitionKey = new PartitionKey(bucket),
+                    MaxItemCount = 300 // or more if needed
+                })
+            .ToFeedIterator();
+
+        while (query.HasMoreResults)
         {
-            int bucket;
-
-            // Pick a new random bucket that hasn't been used yet
-            do
-            {
-                bucket = random.Next(1, 11); // 1 to 10
-            } while (usedBuckets.Contains(bucket));
-
-            usedBuckets.Add(bucket);
-
-            // Query from the selected bucket
-            var query = _container.GetItemLinqQueryable<Hanzi>(
-                    requestOptions: new QueryRequestOptions
-                    {
-                        PartitionKey = new PartitionKey(bucket),
-                        MaxItemCount = count
-                    })
-                .Take(count - results.Count)
-                .ToFeedIterator();
-
-            while (query.HasMoreResults && results.Count < count)
-            {
-                var response = await query.ReadNextAsync();
-                results.AddRange(response);
-            }
+            var response = await query.ReadNextAsync();
+            allItems.AddRange(response);
         }
 
-        // Optional: shuffle the results
-        return results.OrderBy(x => Guid.NewGuid()).Take(count).ToList();
+        // Step 3: Shuffle and take 'count' items
+        return allItems
+            .OrderBy(_ => Guid.NewGuid())
+            .Take(count)
+            .ToList();
     }
 }
