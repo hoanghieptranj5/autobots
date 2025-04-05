@@ -1,5 +1,5 @@
+using CosmosRepository.Abstractions;
 using CosmosRepository.Clients;
-using CosmosRepository.Contracts;
 using CosmosRepository.Entities.HanziCollector;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;

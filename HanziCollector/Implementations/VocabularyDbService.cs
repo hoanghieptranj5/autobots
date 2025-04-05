@@ -1,5 +1,5 @@
 using AutoMapper;
-using CosmosRepository.Contracts;
+using CosmosRepository.Abstractions;
 using CosmosRepository.Entities.Vocabulary;
 using HanziCollector.Abstraction;
 

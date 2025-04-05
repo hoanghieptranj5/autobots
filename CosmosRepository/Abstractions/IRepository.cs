@@ -1,13 +1,11 @@
 using System.Linq.Expressions;
 using CosmosRepository.Entities;
-using CosmosRepository.Entities.HanziCollector;
 
-namespace CosmosRepository.Contracts;
+namespace CosmosRepository.Abstractions;
 
 public interface IRepository<T, R> where T : BaseEntity
 {
     Task<IEnumerable<T>> All();
-    IQueryable<T> AllQuery();
     Task<T?> GetById(R id);
     Task<bool> Add(T entity);
     Task<bool> Delete(R id);

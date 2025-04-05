@@ -3,7 +3,7 @@ using CosmosRepository.Entities.HanziCollector;
 using CosmosRepository.Entities.Users;
 using CosmosRepository.Entities.Vocabulary;
 
-namespace CosmosRepository.Contracts;
+namespace CosmosRepository.Abstractions;
 
 public interface IUnitOfWork
 {

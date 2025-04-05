@@ -1,4 +1,4 @@
-using CosmosRepository.Contracts;
+using CosmosRepository.Abstractions;
 using CosmosRepository.Implementations;
 using IAM.Interfaces;
 using IAM.Mapper;

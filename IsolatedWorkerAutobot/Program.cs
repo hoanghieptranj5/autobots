@@ -1,5 +1,5 @@
+using CosmosRepository.Abstractions;
 using CosmosRepository.Clients;
-using CosmosRepository.Contracts;
 using CosmosRepository.Implementations;
 using CosmosRepository.Settings;
 using ElectricCalculator.DI;

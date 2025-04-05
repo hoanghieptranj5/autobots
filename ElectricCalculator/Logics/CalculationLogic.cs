@@ -1,4 +1,4 @@
-﻿using CosmosRepository.Contracts;
+﻿using CosmosRepository.Abstractions;
 using CosmosRepository.Entities.ElectricCalculator;
 using ElectricCalculator.Models;
 

@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
+using CosmosRepository.Abstractions;
 using CosmosRepository.Clients;
-using CosmosRepository.Contracts;
 using CosmosRepository.Entities;
 using CosmosRepository.Entities.HanziCollector;
 using Microsoft.Azure.Cosmos;
@@ -29,13 +29,6 @@ public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
         }
 
         return results;
-    }
-
-    public IQueryable<T> AllQuery()
-    {
-        // Cosmos DB doesn't support IQueryable directly — you'd need LINQ-to-Cosmos with EF Core or LINQ-to-Objects
-        throw new NotSupportedException(
-            "Cosmos DB does not support IQueryable directly. Use Find with expressions instead.");
     }
 
     public async Task<T?> GetById(R id)

@@ -1,5 +1,5 @@
+using CosmosRepository.Abstractions;
 using CosmosRepository.Clients;
-using CosmosRepository.Contracts;
 using CosmosRepository.Entities.ElectricCalculator;
 using CosmosRepository.Entities.HanziCollector;
 using CosmosRepository.Entities.Users;

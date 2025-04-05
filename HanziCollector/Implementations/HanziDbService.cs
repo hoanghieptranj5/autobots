@@ -1,7 +1,6 @@
-﻿using CosmosRepository.Contracts;
+﻿using CosmosRepository.Abstractions;
 using CosmosRepository.Entities.HanziCollector;
 using HanziCollector.Abstraction;
-using Microsoft.Azure.Cosmos;
 
 namespace HanziCollector.Implementations;
 
@@ -29,15 +28,6 @@ public class HanziDbService : IHanziDbService
     {
         var hanzis = await _unitOfWork.Hanzis.All();
         return hanzis;
-    }
-
-    public async Task<IEnumerable<Hanzi>> ReadRange(int skip, int take)
-    {
-        var result = _unitOfWork.Hanzis
-            .AllQuery()
-            .Skip(skip)
-            .Take(take);
-        return result.ToList();
     }
 
     public async Task<IEnumerable<Hanzi>> ReadRandomHanziList(int count = 20)
