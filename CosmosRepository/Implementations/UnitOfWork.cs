@@ -18,10 +18,4 @@ public class UnitOfWork(CosmosDbContext context) : IUnitOfWork
     public IRepository<ElectricPrice, string> ElectricPrices => _electricPriceRepository;
     public IRepository<User, string> Users => _userRepository;
     public IRepository<Vocabulary, string> Vocabularies => _vocabularyRepository;
-
-    public Task SaveChangesAsync()
-    {
-        // No transactional unit of work in CosmosDB unless using transactional batch in same partition
-        return Task.CompletedTask;
-    }
 }

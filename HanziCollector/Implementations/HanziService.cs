@@ -54,7 +54,6 @@ internal class HanziService : IHanziService
     public async Task<bool> Delete(string id)
     {
         var deleted = await _unitOfWork.Hanzis.Delete(id);
-        await _unitOfWork.SaveChangesAsync();
         return deleted;
     }
 

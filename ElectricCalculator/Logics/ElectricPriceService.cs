@@ -25,21 +25,18 @@ public class ElectricPriceService : IElectricPriceService
     public async Task<bool> InsertSingle(ElectricPrice e)
     {
         var result = await _unitOfWork.ElectricPrices.Add(e);
-        await _unitOfWork.SaveChangesAsync();
         return result;
     }
 
     public async Task<bool> RemoveSingle(int id)
     {
         var result = await _unitOfWork.ElectricPrices.Delete(id.ToString());
-        await _unitOfWork.SaveChangesAsync();
         return result;
     }
 
     public async Task<bool> UpdateSingle(ElectricPrice e)
     {
         var result = await _unitOfWork.ElectricPrices.Add(e);
-        await _unitOfWork.SaveChangesAsync();
         return result;
     }
 }

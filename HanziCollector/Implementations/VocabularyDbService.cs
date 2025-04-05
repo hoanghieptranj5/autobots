@@ -22,7 +22,6 @@ public class VocabularyDbService : IVocabularyDbService
         try
         {
             inserted = await _unitOfWork.Vocabularies.Add(vocabulary);
-            await _unitOfWork.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -56,7 +55,6 @@ public class VocabularyDbService : IVocabularyDbService
     public async Task<bool> UpdateSingle(Vocabulary vocabulary)
     {
         await _unitOfWork.Vocabularies.Upsert(vocabulary);
-        await _unitOfWork.SaveChangesAsync();
         return true;
     }
 }

@@ -16,7 +16,6 @@ public class HanziDbService : IHanziDbService
     public async Task<bool> SaveSingle(Hanzi hanzi)
     {
         var completed = await _unitOfWork.Hanzis.Add(hanzi);
-        await _unitOfWork.SaveChangesAsync();
         return completed;
     }
 
@@ -39,7 +38,6 @@ public class HanziDbService : IHanziDbService
     public async Task<bool> DeleteSingle(string id)
     {
         var completed = await _unitOfWork.Hanzis.Delete(id);
-        await _unitOfWork.SaveChangesAsync();
         return completed;
     }
 
