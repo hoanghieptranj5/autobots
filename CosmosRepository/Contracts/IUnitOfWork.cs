@@ -7,7 +7,7 @@ namespace CosmosRepository.Contracts;
 
 public interface IUnitOfWork
 {
-    IRepository<Hanzi, string> Hanzis { get; }
+    IHanziRepository<Hanzi, string> Hanzis { get; }
     IRepository<ElectricPrice, string> ElectricPrices { get; }
     IRepository<User, string> Users { get; }
     IRepository<Vocabulary, string> Vocabularies { get; }
