@@ -7,7 +7,7 @@ using Microsoft.Azure.Cosmos.Linq;
 namespace CosmosRepository.Implementations;
 
 public class HanziRepository(CosmosDbContext cosmosDbContext, string containerName, string partitionKeyPath)
-    : Repository<Hanzi, string>(cosmosDbContext, containerName, partitionKeyPath), IHanziRepository<Hanzi, string>
+    : Repository<Hanzi>(cosmosDbContext, containerName, partitionKeyPath), IHanziRepository<Hanzi>
 {
     public new async Task<List<Hanzi>> GetRandomHanziList(int count)
     {

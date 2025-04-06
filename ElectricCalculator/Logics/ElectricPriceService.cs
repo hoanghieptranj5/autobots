@@ -30,8 +30,7 @@ public class ElectricPriceService : IElectricPriceService
 
     public async Task<bool> RemoveSingle(int id)
     {
-        var result = await _unitOfWork.ElectricPrices.Delete(id.ToString());
-        return result;
+        throw new NotImplementedException();
     }
 
     public async Task<bool> UpdateSingle(ElectricPrice e)

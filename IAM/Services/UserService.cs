@@ -47,11 +47,12 @@ public class UserService : IUserService
 
     public async Task<UserExport> DeleteSingleByUsername(string username)
     {
-        var user = await _unitOfWork.Users.Find(u => u.Username.Equals(username));
-        var enumerable = user.ToList();
-        if (user == null || !enumerable.Any()) throw new Exception("User not found");
+        var users = await _unitOfWork.Users.Find(u => u.Username.Equals(username));
+        var enumerable = users.ToList();
+        if (users == null || !enumerable.Any()) throw new Exception("User not found");
 
-        await _unitOfWork.Users.Delete(enumerable.FirstOrDefault()!.Id);
+        var user = enumerable.FirstOrDefault()!;
+        await _unitOfWork.Users.Delete(user.Id, user.GetPartitionKey());
         return _mapper.Map<UserExport>(user);
     }
 

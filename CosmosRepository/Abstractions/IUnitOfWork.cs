@@ -7,8 +7,8 @@ namespace CosmosRepository.Abstractions;
 
 public interface IUnitOfWork
 {
-    IHanziRepository<Hanzi, string> Hanzis { get; }
-    IRepository<ElectricPrice, string> ElectricPrices { get; }
-    IRepository<User, string> Users { get; }
-    IRepository<Vocabulary, string> Vocabularies { get; }
+    IHanziRepository<Hanzi> Hanzis { get; }
+    IRepository<ElectricPrice> ElectricPrices { get; }
+    IRepository<User> Users { get; }
+    IRepository<Vocabulary> Vocabularies { get; }
 }

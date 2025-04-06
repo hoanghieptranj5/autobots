@@ -1,9 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Azure.Cosmos;
+using Newtonsoft.Json;
 
 namespace CosmosRepository.Entities.Users;
 
-public class User : BaseEntity
+public class User : CosmosEntity
 {
+    [JsonProperty("id")]
+    public string Id { get; set; }
+    
     [Required]
     [MaxLength(50)] // Define a suitable maximum length for your username
     public string Username { get; set; }
@@ -27,4 +32,8 @@ public class User : BaseEntity
     public bool IsActive { get; set; } = true;
 
     public bool IsAdmin { get; set; } = false;
+    public PartitionKey GetPartitionKey()
+    {
+        return new PartitionKey(this.Username);
+    }
 }

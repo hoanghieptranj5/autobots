@@ -1,7 +1,12 @@
-﻿namespace CosmosRepository.Entities.HanziCollector;
+﻿using Microsoft.Azure.Cosmos;
+using Newtonsoft.Json;
 
-public class Hanzi : BaseEntity
+namespace CosmosRepository.Entities.HanziCollector;
+
+public class Hanzi : CosmosEntity
 {
+    [JsonProperty("id")]
+    public string Id { get; set; }
     public string? HanViet { get; set; }
     public string? Pinyin { get; set; }
     public string? Cantonese { get; set; }
@@ -14,4 +19,8 @@ public class Hanzi : BaseEntity
     public int InsertedOrder { get; set; }
 
     public int Bucket { get; set; }
+    public PartitionKey GetPartitionKey()
+    {
+        return new PartitionKey(Bucket);
+    }
 }

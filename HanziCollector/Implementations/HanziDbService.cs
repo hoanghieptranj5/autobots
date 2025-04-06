@@ -37,8 +37,7 @@ public class HanziDbService : IHanziDbService
 
     public async Task<bool> DeleteSingle(string id)
     {
-        var completed = await _unitOfWork.Hanzis.Delete(id);
-        return completed;
+        throw new NotImplementedException();
     }
 
     public Task<bool> UpdateSingle(Hanzi hanzi)

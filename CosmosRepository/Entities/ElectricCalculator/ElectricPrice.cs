@@ -1,10 +1,21 @@
-﻿namespace CosmosRepository.Entities.ElectricCalculator;
+﻿using Microsoft.Azure.Cosmos;
+using Newtonsoft.Json;
 
-public class ElectricPrice : BaseEntity
+namespace CosmosRepository.Entities.ElectricCalculator;
+
+public class ElectricPrice : CosmosEntity
 {
+    [JsonProperty("id")]
+    public string Id { get; set; }
+
     public int From { get; set; }
     public int To { get; set; }
     public float StandardPrice { get; set; }
     public float Price { get; set; }
     public float Usage { get; set; }
+    
+    public PartitionKey GetPartitionKey()
+    {
+        return new PartitionKey(Id);
+    }
 }

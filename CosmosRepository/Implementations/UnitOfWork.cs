@@ -9,13 +9,13 @@ namespace CosmosRepository.Implementations;
 
 public class UnitOfWork(CosmosDbContext context) : IUnitOfWork
 {
-    private IHanziRepository<Hanzi, string> _hanziRepository = new HanziRepository(context, "Hanzis", "/Bucket");
-    private IRepository<ElectricPrice, string> _electricPriceRepository = new Repository<ElectricPrice, string>(context, "ElectricPrice", "/Id");
-    private IRepository<User, string> _userRepository = new Repository<User, string>(context, "User", "/Username");
-    private IRepository<Vocabulary, string> _vocabularyRepository = new Repository<Vocabulary, string>(context, "Vocabulary", "/Id");
+    private IHanziRepository<Hanzi> _hanziRepository = new HanziRepository(context, "Hanzis", "/Bucket");
+    private IRepository<ElectricPrice> _electricPriceRepository = new Repository<ElectricPrice>(context, "ElectricPrice", "/Id");
+    private IRepository<User> _userRepository = new Repository<User>(context, "User", "/Username");
+    private IRepository<Vocabulary> _vocabularyRepository = new Repository<Vocabulary>(context, "Vocabulary", "/Id");
 
-    public IHanziRepository<Hanzi, string> Hanzis => _hanziRepository;
-    public IRepository<ElectricPrice, string> ElectricPrices => _electricPriceRepository;
-    public IRepository<User, string> Users => _userRepository;
-    public IRepository<Vocabulary, string> Vocabularies => _vocabularyRepository;
+    public IHanziRepository<Hanzi> Hanzis => _hanziRepository;
+    public IRepository<ElectricPrice> ElectricPrices => _electricPriceRepository;
+    public IRepository<User> Users => _userRepository;
+    public IRepository<Vocabulary> Vocabularies => _vocabularyRepository;
 }

@@ -2,13 +2,12 @@ using System.Linq.Expressions;
 using CosmosRepository.Abstractions;
 using CosmosRepository.Clients;
 using CosmosRepository.Entities;
-using CosmosRepository.Entities.HanziCollector;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 
 namespace CosmosRepository.Implementations;
 
-public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
+public class Repository<T> : IRepository<T> where T : CosmosEntity
 {
     protected readonly Container _container;
 
@@ -31,24 +30,16 @@ public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
         return results;
     }
 
-    public async Task<T?> GetById(R id)
+    public Task<T?> GetById(string id)
     {
-        try
-        {
-            var response = await _container.ReadItemAsync<T>(id!.ToString(), new PartitionKey(id.ToString()));
-            return response.Resource;
-        }
-        catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
-        {
-            return null;
-        }
+        throw new NotImplementedException();
     }
 
     public async Task<bool> Add(T entity)
     {
         try
         {
-            await _container.CreateItemAsync(entity, new PartitionKey(entity.Id));
+            await _container.CreateItemAsync(entity, entity.GetPartitionKey());
             return true;
         }
         catch
@@ -57,11 +48,24 @@ public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
         }
     }
 
-    public async Task<bool> Delete(R id)
+    public async Task<bool> Delete(T entity)
     {
         try
         {
-            await _container.DeleteItemAsync<T>(id!.ToString(), new PartitionKey(id.ToString()));
+            await _container.DeleteItemAsync<T>(entity.Id, entity.GetPartitionKey());
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> Delete(string id, PartitionKey partitionKey)
+    {
+        try
+        {
+            await _container.DeleteItemAsync<T>(id, partitionKey);
             return true;
         }
         catch
@@ -74,7 +78,7 @@ public class Repository<T, R> : IRepository<T, R> where T : BaseEntity
     {
         try
         {
-            await _container.UpsertItemAsync(entity, new PartitionKey(entity.Id));
+            await _container.UpsertItemAsync(entity, entity.GetPartitionKey());
             return true;
         }
         catch
