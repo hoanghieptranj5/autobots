@@ -7,18 +7,15 @@ using Microsoft.Azure.Cosmos.Linq;
 
 namespace CosmosRepository.Implementations;
 
-public class Repository<T> : IRepository<T> where T : CosmosEntity
+public class Repository<T>(CosmosDbContext cosmosDbContext, string containerName, string partitionKeyPath)
+    : IRepository<T>
+    where T : CosmosEntity
 {
-    protected readonly Container _container;
-
-    public Repository(CosmosDbContext cosmosDbContext, string containerName, string partitionKeyPath)
-    {
-        _container = cosmosDbContext.GetContainer(containerName, partitionKeyPath);
-    }
+    protected readonly Container Container = cosmosDbContext.GetContainer(containerName, partitionKeyPath);
 
     public async Task<IEnumerable<T>> All()
     {
-        var query = _container.GetItemQueryIterator<T>("SELECT * FROM c");
+        var query = Container.GetItemQueryIterator<T>("SELECT * FROM c");
         var results = new List<T>();
 
         while (query.HasMoreResults)
@@ -39,7 +36,7 @@ public class Repository<T> : IRepository<T> where T : CosmosEntity
     {
         try
         {
-            await _container.CreateItemAsync(entity, entity.GetPartitionKey());
+            await Container.CreateItemAsync(entity, entity.GetPartitionKey());
             return true;
         }
         catch
@@ -52,7 +49,7 @@ public class Repository<T> : IRepository<T> where T : CosmosEntity
     {
         try
         {
-            await _container.DeleteItemAsync<T>(entity.Id, entity.GetPartitionKey());
+            await Container.DeleteItemAsync<T>(entity.Id, entity.GetPartitionKey());
             return true;
         }
         catch
@@ -65,7 +62,7 @@ public class Repository<T> : IRepository<T> where T : CosmosEntity
     {
         try
         {
-            await _container.DeleteItemAsync<T>(id, partitionKey);
+            await Container.DeleteItemAsync<T>(id, partitionKey);
             return true;
         }
         catch
@@ -78,7 +75,7 @@ public class Repository<T> : IRepository<T> where T : CosmosEntity
     {
         try
         {
-            await _container.UpsertItemAsync(entity, entity.GetPartitionKey());
+            await Container.UpsertItemAsync(entity, entity.GetPartitionKey());
             return true;
         }
         catch
@@ -96,7 +93,7 @@ public class Repository<T> : IRepository<T> where T : CosmosEntity
     /// <returns></returns>
     public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
     {
-        var query = _container.GetItemLinqQueryable<T>(allowSynchronousQueryExecution: false)
+        var query = Container.GetItemLinqQueryable<T>(allowSynchronousQueryExecution: false)
             .Where(predicate)
             .ToFeedIterator();
 

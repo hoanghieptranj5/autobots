@@ -19,7 +19,7 @@ public class HanziRepository(CosmosDbContext cosmosDbContext, string containerNa
         // Step 2: Fetch all items from that partition
         var allItems = new List<Hanzi>();
 
-        var query = _container.GetItemLinqQueryable<Hanzi>(
+        var query = Container.GetItemLinqQueryable<Hanzi>(
                 requestOptions: new QueryRequestOptions
                 {
                     PartitionKey = new PartitionKey(bucket),
