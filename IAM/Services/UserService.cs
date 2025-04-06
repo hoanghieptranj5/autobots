@@ -40,9 +40,22 @@ public class UserService : IUserService
         return users.Select(u => _mapper.Map<UserExport>(u));
     }
 
-    public Task<UserExport> DeleteSingle(DeleteUserRequest request)
+    public async Task<UserExport> DeleteSingle(DeleteUserRequest request)
     {
-        throw new NotImplementedException();
+        var users = await _unitOfWork.Users.Find(u => u.Username.Equals(request.Username));
+        var enumerable = users.ToList();
+        if (users == null || !enumerable.Any()) throw new Exception("User not found");
+        var user = enumerable.FirstOrDefault()!;
+
+        try
+        {
+            await _unitOfWork.Users.Delete(user);
+            return _mapper.Map<UserExport>(user);
+        }
+        catch
+        {
+            throw new Exception("User cannot be deleted");
+        }
     }
 
     public async Task<UserExport> DeleteSingleByUsername(string username)
