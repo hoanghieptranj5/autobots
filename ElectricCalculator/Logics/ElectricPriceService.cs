@@ -19,7 +19,8 @@ public class ElectricPriceService : IElectricPriceService
 
     public async Task<IEnumerable<ElectricPrice>> GetAll()
     {
-        return await _unitOfWork.ElectricPrices.All();
+        var prices = await _unitOfWork.ElectricPrices.All();
+        return prices.ToList().OrderBy(x => x.From);
     }
 
     public async Task<bool> InsertSingle(ElectricPrice e)

@@ -17,6 +17,8 @@ public class CalculationLogic : ICalculationLogic
     public async Task<CalculatedModel> CalculateAsync(int usage)
     {
         var prices = await _unitOfWork.ElectricPrices.All();
+        var sortedPrices = prices.ToList().OrderBy(x => x.From);
+
         var remaining = usage;
         var total = 0.0f;
         var results = new CalculatedModel
@@ -24,7 +26,7 @@ public class CalculationLogic : ICalculationLogic
             Items = new List<ElectricPrice>()
         };
 
-        foreach (var pricing in prices)
+        foreach (var pricing in sortedPrices)
             if (remaining >= pricing.To - pricing.From)
             {
                 remaining -= pricing.To - pricing.From;
