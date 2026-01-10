@@ -50,7 +50,6 @@ var host = new HostBuilder()
         services.SetupHanziDependencies();
         services.SetupElectricityPriceDependencies();
         services.SetupIAMDependencies();
-        services.AddEndpointsApiExplorer();
 
         // 👀 Optional: debug output
         Console.WriteLine($"[DEBUG] CosmosDbSettings loaded: {(string.IsNullOrEmpty(cosmosConnection) ? "MISSING" : "OK")}");
